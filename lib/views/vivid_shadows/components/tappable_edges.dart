@@ -41,7 +41,7 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final double padding = kMinInteractiveDimension / 2;
+    final double padding = 20.0;
 
     var _color = Colors.white.withOpacity(0.2);
     return Stack(
@@ -74,6 +74,7 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
           bottom: 0,
           child: LayoutBuilder(builder: (context, constraints) {
             print('---------- constraints : $constraints');
+
             return MultiGestureDetector(
               child: Container(
                 color: _color,
@@ -81,17 +82,70 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
                 // height: widget.screenWidth * ratio + paddingV * 2,
               ),
               onDown: (event) {
-                print(event.localPosition);
-
-                // if (event.position) hController.animateTo(1.0);
+                final RenderBox referenceBox = context.findRenderObject();
+                var localPosition = referenceBox.globalToLocal(event.position);
+                print('LOCALPOSITION: ${localPosition}');
+                if (localPosition.isInLeftArea(constraints: constraints)) {
+                  hController.animateTo(0.0);
+                }
+                if (localPosition.isInRightArea(constraints: constraints)) {
+                  hController.animateTo(1.0);
+                }
+                if (localPosition.isInTopArea(constraints: constraints)) {
+                  vController.animateTo(0.0);
+                }
+                if (localPosition.isInBottomArea(constraints: constraints)) {
+                  vController.animateTo(1.0);
+                }
               },
               onUp: (event) {
                 hController.animateTo(0.5);
+                vController.animateTo(0.5);
               },
             );
           }),
         ),
       ],
     );
+  }
+}
+
+extension IsInLeftArea on Offset {
+  bool isInLeftArea(
+      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+    return (this.dx >= 0 &&
+        this.dx <= areaWidth &&
+        this.dy >= 0 &&
+        this.dy <= constraints.minHeight);
+  }
+}
+
+extension IsInRightArea on Offset {
+  bool isInRightArea(
+      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+    return (this.dx >= (constraints.minWidth - areaWidth) &&
+        this.dx <= constraints.minWidth &&
+        this.dy >= 0 &&
+        this.dy <= constraints.minHeight);
+  }
+}
+
+extension IsInTopArea on Offset {
+  bool isInTopArea(
+      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+    return (this.dx >= 0 &&
+        this.dx <= constraints.minWidth &&
+        this.dy >= 0 &&
+        this.dy <= areaWidth);
+  }
+}
+
+extension IsInBottomArea on Offset {
+  bool isInBottomArea(
+      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+    return (this.dx >= 0 &&
+        this.dx <= constraints.minWidth &&
+        this.dy >= (constraints.minHeight - areaWidth) &&
+        this.dy <= constraints.minHeight);
   }
 }
