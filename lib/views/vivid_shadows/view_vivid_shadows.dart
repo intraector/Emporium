@@ -1,8 +1,9 @@
-import 'package:emporium/item.dart';
+import 'package:emporium/views/vivid_shadows/components/item.dart';
+import 'package:emporium/views/vivid_shadows/components/tappable_edges.dart';
 import 'package:flutter/material.dart';
 
-class View1 extends StatelessWidget {
-  View1(this.width);
+class ViewVividShadows extends StatelessWidget {
+  ViewVividShadows(this.width);
   final double width;
   final double padding = 25.0;
 
@@ -11,22 +12,22 @@ class View1 extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(bottom: padding, top: padding),
-          child: Item(
-            width: width,
-            path: 'assets/images/oldman.jpg',
+          child: TappableEdges(
+            screenWidth: width,
+            path: 'assets/images/bananas.png',
           ),
         ),
         Padding(
           padding: EdgeInsets.only(bottom: padding),
           child: Item(
-            width: width,
+            screenWidth: width,
             path: 'assets/images/vertical.jpg',
           ),
         ),
         Padding(
           padding: EdgeInsets.only(bottom: padding),
           child: Item(
-            width: width,
+            screenWidth: width,
             path: 'assets/images/smoke.jpg',
           ),
         ),

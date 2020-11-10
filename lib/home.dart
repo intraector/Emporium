@@ -1,4 +1,4 @@
-import 'package:emporium/view_1.dart';
+import 'package:emporium/views/vivid_shadows/view_vivid_shadows.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -10,7 +10,8 @@ class Home extends StatelessWidget {
       //   backgroundColor: Colors.brown,
       // ),
       backgroundColor: Colors.brown,
-      body: View1(width),
+      // body: ViewPopUnfold(width),
+      body: ViewVividShadows(width),
     );
   }
 }
