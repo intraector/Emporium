@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
       //   title: Text('Emporium'),
       //   backgroundColor: Colors.brown,
       // ),
-      backgroundColor: Colors.brown,
+      // backgroundColor: Colors.brown,
       // body: ViewPopUnfold(width),
       body: ViewVividShadows(width),
     );

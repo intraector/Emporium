@@ -13,12 +13,18 @@ class TappableEdges extends StatefulWidget {
 
 class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateMixin {
   final double ratio = 1.479;
+  final double padding = 20.0;
+  final double blurRadius = 3.0;
+  final double spreadRadius = 3.0;
+  final initialOffset = Offset(3.0, 3.0);
+  final double xShift = 5.0;
+  final double vShift = 5.0;
 
   AnimationController hController;
-  Animation<double> hAnim;
+  Animation<double> hAnimation;
 
   AnimationController vController;
-  Animation<double> vAnim;
+  Animation<double> vAnimation;
 
   @override
   void initState() {
@@ -27,39 +33,36 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
     hController = AnimationController(
       vsync: this,
       value: 0.5,
-      duration: Duration(milliseconds: 10),
+      duration: Duration(milliseconds: 100),
     );
-    hAnim = Tween<double>(begin: 5, end: -5).animate(hController);
+    hAnimation = Tween<double>(begin: xShift, end: -xShift).animate(hController);
 
     vController = AnimationController(
       vsync: this,
       value: 0.5,
-      duration: Duration(milliseconds: 10),
+      duration: Duration(milliseconds: 100),
     );
-    vAnim = Tween<double>(begin: 5, end: -5).animate(vController);
+    vAnimation = Tween<double>(begin: vShift, end: -vShift).animate(vController);
   }
 
   @override
   Widget build(BuildContext context) {
-    final double padding = 20.0;
-
-    var _color = Colors.white.withOpacity(0.2);
     return Stack(
       children: [
         AnimatedBuilder(
-          animation: vAnim,
+          animation: vAnimation,
           builder: (context, child) => AnimatedBuilder(
-            animation: hAnim,
+            animation: hAnimation,
             builder: (context, child) => Container(
               margin: EdgeInsets.symmetric(horizontal: padding, vertical: padding),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black,
-                    blurRadius: 5.0,
-                    spreadRadius: 5.0,
-                    offset: Offset(hAnim.value + 5, vAnim.value + 5),
+                    color: Colors.black87,
+                    blurRadius: blurRadius,
+                    spreadRadius: spreadRadius,
+                    offset: Offset(hAnimation.value, vAnimation.value) + initialOffset,
                   ),
                 ],
               ),
@@ -73,18 +76,11 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
           top: 0,
           bottom: 0,
           child: LayoutBuilder(builder: (context, constraints) {
-            print('---------- constraints : $constraints');
-
             return MultiGestureDetector(
-              child: Container(
-                color: _color,
-                // width: thickness,
-                // height: widget.screenWidth * ratio + paddingV * 2,
-              ),
+              child: Container(),
               onDown: (event) {
                 final RenderBox referenceBox = context.findRenderObject();
                 var localPosition = referenceBox.globalToLocal(event.position);
-                print('LOCALPOSITION: ${localPosition}');
                 if (localPosition.isInLeftArea(constraints: constraints)) {
                   hController.animateTo(0.0);
                 }
