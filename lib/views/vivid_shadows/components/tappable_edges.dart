@@ -3,8 +3,8 @@ import 'package:emporium/views/vivid_shadows/components/item.dart';
 import 'package:flutter/material.dart';
 
 class TappableEdges extends StatefulWidget {
-  TappableEdges({@required this.screenWidth, @required this.path});
-  final double screenWidth;
+  TappableEdges({@required this.width, @required this.path});
+  final double width;
   final String path;
 
   @override
@@ -14,8 +14,8 @@ class TappableEdges extends StatefulWidget {
 class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateMixin {
   final double ratio = 1.479;
   final double padding = 20.0;
-  final double blurRadius = 3.0;
-  final double spreadRadius = 3.0;
+  final double blurRadius = 10.0;
+  final double spreadRadius = 1.0;
   final initialOffset = Offset(3.0, 3.0);
   final double xShift = 5.0;
   final double vShift = 5.0;
@@ -33,14 +33,14 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
     hController = AnimationController(
       vsync: this,
       value: 0.5,
-      duration: Duration(milliseconds: 100),
+      duration: Duration(milliseconds: 200),
     );
     hAnimation = Tween<double>(begin: xShift, end: -xShift).animate(hController);
 
     vController = AnimationController(
       vsync: this,
       value: 0.5,
-      duration: Duration(milliseconds: 100),
+      duration: Duration(milliseconds: 200),
     );
     vAnimation = Tween<double>(begin: vShift, end: -vShift).animate(vController);
   }
@@ -59,14 +59,14 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
                 borderRadius: BorderRadius.circular(25.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black87,
+                    color: Colors.black,
                     blurRadius: blurRadius,
                     spreadRadius: spreadRadius,
                     offset: Offset(hAnimation.value, vAnimation.value) + initialOffset,
                   ),
                 ],
               ),
-              child: Item(screenWidth: widget.screenWidth, path: widget.path),
+              child: Item(screenWidth: widget.width, path: widget.path),
             ),
           ),
         ),
@@ -77,7 +77,9 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
           bottom: 0,
           child: LayoutBuilder(builder: (context, constraints) {
             return MultiGestureDetector(
-              child: Container(),
+              child: Container(
+                  // color: Colors.pink,
+                  ),
               onDown: (event) {
                 final RenderBox referenceBox = context.findRenderObject();
                 var localPosition = referenceBox.globalToLocal(event.position);

@@ -27,6 +27,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
       height: maxHeight,
+      width: widget.screenWidth,
       margin: EdgeInsets.symmetric(horizontal: padding),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25.0),

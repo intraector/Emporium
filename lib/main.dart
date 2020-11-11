@@ -1,4 +1,5 @@
 import 'package:emporium/home.dart';
+import 'package:emporium/scrollTypeOne/sizes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
