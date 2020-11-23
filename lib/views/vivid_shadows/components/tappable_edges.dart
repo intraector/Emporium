@@ -1,11 +1,11 @@
 import 'package:emporium/common_components/multi_gesture_detector.dart';
-import 'package:emporium/views/vivid_shadows/components/item.dart';
+import 'package:emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class TappableEdges extends StatefulWidget {
-  TappableEdges({@required this.width, @required this.path});
-  final double width;
-  final String path;
+  TappableEdges({@required this.child});
+  final Widget child;
 
   @override
   _TappableEdgesState createState() => _TappableEdgesState();
@@ -13,12 +13,10 @@ class TappableEdges extends StatefulWidget {
 
 class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateMixin {
   final double ratio = 1.479;
-  final double padding = 20.0;
-  final double blurRadius = 10.0;
-  final double spreadRadius = 1.0;
+  final EdgeInsetsGeometry margin = EdgeInsets.symmetric(horizontal: 20, vertical: 0);
   final initialOffset = Offset(3.0, 3.0);
-  final double xShift = 5.0;
-  final double vShift = 5.0;
+  final double xShift = 1.0;
+  final double vShift = 1.0;
 
   AnimationController hController;
   Animation<double> hAnimation;
@@ -33,14 +31,14 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
     hController = AnimationController(
       vsync: this,
       value: 0.5,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 100),
     );
     hAnimation = Tween<double>(begin: xShift, end: -xShift).animate(hController);
 
     vController = AnimationController(
       vsync: this,
       value: 0.5,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 100),
     );
     vAnimation = Tween<double>(begin: vShift, end: -vShift).animate(vController);
   }
@@ -49,24 +47,32 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        // widget.child,
         AnimatedBuilder(
           animation: vAnimation,
           builder: (context, child) => AnimatedBuilder(
             animation: hAnimation,
-            builder: (context, child) => Container(
-              margin: EdgeInsets.symmetric(horizontal: padding, vertical: padding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    blurRadius: blurRadius,
-                    spreadRadius: spreadRadius,
-                    offset: Offset(hAnimation.value, vAnimation.value) + initialOffset,
+            builder: (context, child) => Rotation3d(
+              rotationX: -vAnimation.value * 5,
+              rotationY: hAnimation.value * 5,
+              child: Container(
+                margin: margin,
+                child: NeumorphicTheme(
+                  themeMode: ThemeMode.light,
+                  theme: NeumorphicThemeData(
+                    lightSource: LightSource(hAnimation.value, vAnimation.value),
                   ),
-                ],
+                  child: Neumorphic(
+                    child: widget.child,
+                    style: NeumorphicStyle(
+                      shape: NeumorphicShape.concave,
+                      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
+                      depth: 8,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
               ),
-              child: Item(screenWidth: widget.width, path: widget.path),
             ),
           ),
         ),
@@ -83,6 +89,7 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
               onDown: (event) {
                 final RenderBox referenceBox = context.findRenderObject();
                 var localPosition = referenceBox.globalToLocal(event.position);
+
                 if (localPosition.isInLeftArea(constraints: constraints)) {
                   hController.animateTo(0.0);
                 }

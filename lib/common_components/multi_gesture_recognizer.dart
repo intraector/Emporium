@@ -14,19 +14,19 @@ class MultiGestureRecognizer extends OneSequenceGestureRecognizer {
   @override
   void addPointer(PointerEvent event) {
     startTrackingPointer(event.pointer);
+    // resolve(GestureDisposition.accepted);
   }
 
+  // double lastY;
   @override
   void handleEvent(PointerEvent event) {
-    // print('---------- fired');
-    // print(event.runtimeType);
     if (event is PointerDownEvent) {
       if (onDown != null) onDown(event);
     } else if (event is PointerMoveEvent) {
       if (onMove != null) onMove(event);
     } else if (event is PointerUpEvent) {
       if (onUp != null) onUp(event);
-      // stopTrackingPointer(event.pointer);
+      stopTrackingPointer(event.pointer);
     }
   }
 

@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
+  flutter_neumorphic: ^3.0.3
   google_fonts: ^1.1.1
   mdi: ^4.0.0
   scroll_snap_list: ^0.5.1

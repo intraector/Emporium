@@ -19,7 +19,7 @@ class MultiGestureDetector extends StatelessWidget {
       gestures: {
         MultiGestureRecognizer: GestureRecognizerFactoryWithHandlers<MultiGestureRecognizer>(
           () => MultiGestureRecognizer(onUp: onUp, onMove: onMove, onDown: onDown),
-          (MultiGestureRecognizer instance) {},
+          (instance) {},
         ),
       },
       child: child,
