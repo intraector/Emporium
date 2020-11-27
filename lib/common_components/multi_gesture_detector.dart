@@ -1,4 +1,4 @@
-import 'package:emporium/common_components/multi_gesture_recognizer.dart';
+import 'package:Emporium/common_components/multi_gesture_recognizer.dart';
 import 'package:flutter/material.dart';
 
 class MultiGestureDetector extends StatelessWidget {

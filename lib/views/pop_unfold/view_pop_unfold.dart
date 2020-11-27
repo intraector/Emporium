@@ -1,4 +1,4 @@
-import 'package:emporium/views/pop_unfold/components/item.dart';
+import 'package:Emporium/views/pop_unfold/components/item.dart';
 import 'package:flutter/material.dart';
 
 class ViewPopUnfold extends StatelessWidget {

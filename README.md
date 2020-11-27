@@ -1,4 +1,4 @@
-# emporium
+# Emporium
 
 A new Flutter project.
 

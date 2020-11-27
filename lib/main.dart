@@ -1,4 +1,4 @@
-import 'package:emporium/home.dart';
+import 'package:Emporium/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {

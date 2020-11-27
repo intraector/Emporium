@@ -1,10 +1,12 @@
 import 'package:Emporium/common_components/multi_gesture_detector.dart';
 import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class TappableEdges extends StatefulWidget {
-  TappableEdges({@required this.child, @required this.width, @required this.height, margin})
-      : this.margin = margin ?? EdgeInsets.symmetric(horizontal: 20, vertical: 0);
+class TappableEdgesWithShadows extends StatefulWidget {
+  TappableEdgesWithShadows(
+      {@required this.child, @required this.width, @required this.height, margin})
+      : this.margin = margin ?? EdgeInsets.symmetric(horizontal: 20, vertical: 5.0);
   final Widget child;
   final double width;
   final double height;
@@ -14,7 +16,7 @@ class TappableEdges extends StatefulWidget {
   _TappableEdgesState createState() => _TappableEdgesState();
 }
 
-class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateMixin {
+class _TappableEdgesState extends State<TappableEdgesWithShadows> with TickerProviderStateMixin {
   final initialOffset = Offset(3.0, 3.0);
   final double xShift = 1.0;
   final double vShift = 1.0;
@@ -57,7 +59,21 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
               rotationY: hAnimation.value * 5,
               child: Container(
                 margin: widget.margin,
-                child: widget.child,
+                child: NeumorphicTheme(
+                  themeMode: ThemeMode.light,
+                  theme: NeumorphicThemeData(
+                    lightSource: LightSource(hAnimation.value, vAnimation.value),
+                  ),
+                  child: Neumorphic(
+                    child: widget.child,
+                    style: NeumorphicStyle(
+                      shape: NeumorphicShape.concave,
+                      boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
+                      depth: 8,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

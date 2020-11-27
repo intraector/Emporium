@@ -1,92 +1,44 @@
-import 'package:emporium/common_components/multi_gesture_detector.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class ElasticDrag extends StatefulWidget {
-  ElasticDrag({@required this.child});
+class ElasticDrag extends StatelessWidget {
+  ElasticDrag({
+    this.currentPage,
+    this.itemIndex,
+    this.offset,
+    @required this.child,
+    this.isOn = true,
+    this.margin = 10.0,
+    this.elasticMargin = 20.0,
+  });
+
+  final double currentPage;
+  final int itemIndex;
+  final double offset;
+  final bool isOn;
+  final double margin;
+  final double elasticMargin;
+
   final Widget child;
-
-  @override
-  _ElasticDragState createState() => _ElasticDragState();
-}
-
-class _ElasticDragState extends State<ElasticDrag> with SingleTickerProviderStateMixin {
-  AnimationController vController;
-  Animation<double> vAnimation;
-
-  @override
-  void initState() {
-    GestureBinding.instance.resamplingEnabled = true;
-    super.initState();
-    vController = AnimationController(
-      vsync: this,
-      value: 0.5,
-      duration: Duration(milliseconds: 100),
-    );
-    vAnimation = Tween<double>(begin: -defaultPadding, end: defaultPadding).animate(vController);
-  }
-
-  double lastY;
-  double defaultPadding = 20.0;
-  double bottomPadding = 20.0;
-  double topPadding = 20.0;
-  TickerFuture isAnimationRunning;
-
   @override
   Widget build(BuildContext context) {
-    return MultiGestureDetector(
-      child: AnimatedBuilder(
-        animation: vAnimation,
-        builder: (context, child) => Padding(
-          padding: EdgeInsets.only(
-              top: defaultPadding + vAnimation.value, bottom: bottomPadding - vAnimation.value),
-          child: widget.child,
-        ),
-      ),
-      onDown: (event) {
-        lastY = event.position.dy;
-// if(isAnimationRunning. )
-        vController.stop();
-        // vController.animateTo(1.0);
-      },
-      onMove: (event) {
-        var distance = event.position.dy - lastY;
-        if (distance.isNegative) {
-          if (distance.abs() <= (defaultPadding)) {
-            // setState(() {
-            //   bottomPadding = defaultPadding + distance.abs();
-            //   topPadding = ((defaultPadding - distance.abs())).clamp(0.0, defaultPadding);
-            // });
-            var tt = distance.abs() / defaultPadding;
-            isAnimationRunning = vController.animateTo(0.5 - (0.5 * tt));
-          }
-        }
-        if (!distance.isNegative) {
-          if (distance.abs() <= (defaultPadding)) {
-            // setState(() {
-            //   topPadding = defaultPadding + distance.abs();
-            //   bottomPadding = ((defaultPadding - distance.abs())).clamp(0.0, defaultPadding);
-            //   print('DISTANCE.ABS(): ${distance.abs()}');
-            //   print('BOTTOMPADDING: ${bottomPadding}');
-            // });
-            var tt = distance.abs() / defaultPadding;
-            isAnimationRunning = vController.animateTo(0.5 + (0.5 * tt));
-          }
-        }
-      },
-      onUp: (_) {
-        // setState(() {
-        //   topPadding = defaultPadding;
-        //   bottomPadding = defaultPadding;
-        // });
-        vController.animateTo(0.5);
-      },
+    var cardMarginTop = margin;
+    var cardMarginBottom = margin;
+    var currentIndex = int.tryParse(currentPage.toString().split('.')[0]);
+    if (currentIndex != null) {
+      if (offset > 0.0 && itemIndex == currentIndex) {
+        cardMarginTop = margin - (margin * offset.abs());
+        cardMarginBottom = margin + (elasticMargin * offset.abs());
+      }
+      if (offset < 0.0 && itemIndex == (currentIndex + 1)) {
+        cardMarginTop = margin + (elasticMargin * offset.abs());
+        cardMarginBottom = margin - (margin * offset.abs());
+      }
+    }
+    return Container(
+      margin: isOn
+          ? EdgeInsets.only(top: cardMarginTop, bottom: cardMarginBottom)
+          : EdgeInsets.only(top: margin, bottom: margin),
+      child: child,
     );
-  }
-
-  @override
-  void dispose() {
-    vController.dispose();
-    super.dispose();
   }
 }
