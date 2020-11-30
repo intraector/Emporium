@@ -2,25 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BodyText extends StatelessWidget {
-  BodyText({
-    @required this.width,
-    @required this.height,
-    @required this.maxParallax,
-    @required this.globalOffset,
-  });
+  BodyText({@required this.width, @required this.height});
   final double width;
   final double height;
-  final double maxParallax;
-  final double globalOffset;
   final double innerPadding = 20.0;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        left: innerPadding,
-        right: innerPadding,
-        bottom: (globalOffset / 1.5) + maxParallax + height * 0.15,
-      ),
+      // margin: EdgeInsets.only(left: innerPadding, right: innerPadding),
       // color: Colors.pink.withOpacity(0.5),
       alignment: Alignment.bottomCenter,
       width: width,

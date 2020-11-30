@@ -3,8 +3,8 @@ import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class TappableEdges extends StatefulWidget {
-  TappableEdges({@required this.child, @required this.width, @required this.height, margin})
-      : this.margin = margin ?? EdgeInsets.symmetric(horizontal: 20, vertical: 0);
+  TappableEdges(
+      {@required this.child, @required this.width, @required this.height, @required this.margin});
   final Widget child;
   final double width;
   final double height;

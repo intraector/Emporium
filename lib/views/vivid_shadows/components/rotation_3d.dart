@@ -8,20 +8,26 @@ class Rotation3d extends StatelessWidget {
   final double rotationX;
   final double rotationY;
   final double rotationZ;
+  final bool rotationIsOn;
 
-  const Rotation3d(
-      {Key key, @required this.child, this.rotationX = 0, this.rotationY = 0, this.rotationZ = 0})
-      : super(key: key);
+  const Rotation3d({
+    Key key,
+    @required this.child,
+    this.rotationX = 0,
+    this.rotationY = 0,
+    this.rotationZ = 0,
+    this.rotationIsOn = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Transform(
-        alignment: FractionalOffset.center,
-        transform: Matrix4.identity()
-          ..setEntry(3, 2, 0.001)
-          ..rotateX(rotationX * degrees2Radians)
-          ..rotateY(rotationY * degrees2Radians)
-          ..rotateZ(rotationZ * degrees2Radians),
-        child: child);
+    Matrix4 transform = Matrix4.identity()..setEntry(3, 2, 0.001);
+    if (rotationIsOn) {
+      transform
+        ..rotateX(rotationX * degrees2Radians)
+        ..rotateY(rotationY * degrees2Radians)
+        ..rotateZ(rotationZ * degrees2Radians);
+    }
+    return Transform(alignment: FractionalOffset.center, transform: transform, child: child);
   }
 }

@@ -123,6 +123,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -256,6 +263,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.13"
+  sailor:
+    dependency: "direct main"
+    description:
+      name: sailor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.1"
   sky_engine:
     dependency: transitive
     description: flutter

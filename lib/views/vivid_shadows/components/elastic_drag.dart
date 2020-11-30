@@ -7,8 +7,9 @@ class ElasticDrag extends StatelessWidget {
     this.offset,
     @required this.child,
     this.isOn = true,
-    this.margin = 10.0,
-    this.elasticMargin = 20.0,
+    this.margin,
+    this.elasticMargin,
+    this.axis = Axis.vertical,
   });
 
   final double currentPage;
@@ -17,27 +18,35 @@ class ElasticDrag extends StatelessWidget {
   final bool isOn;
   final double margin;
   final double elasticMargin;
+  final Axis axis;
 
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    var cardMarginTop = margin;
-    var cardMarginBottom = margin;
+    var cardMarginStart = margin;
+    var cardMarginEnd = margin;
     var currentIndex = int.tryParse(currentPage.toString().split('.')[0]);
     if (currentIndex != null) {
       if (offset > 0.0 && itemIndex == currentIndex) {
-        cardMarginTop = margin - (margin * offset.abs());
-        cardMarginBottom = margin + (elasticMargin * offset.abs());
+        cardMarginStart = margin - (margin * offset.abs());
+        cardMarginEnd = margin + (elasticMargin * offset.abs());
       }
       if (offset < 0.0 && itemIndex == (currentIndex + 1)) {
-        cardMarginTop = margin + (elasticMargin * offset.abs());
-        cardMarginBottom = margin - (margin * offset.abs());
+        cardMarginStart = margin + (elasticMargin * offset.abs());
+        cardMarginEnd = margin - (margin * offset.abs());
       }
     }
+    EdgeInsets outputMargin;
+    switch (axis) {
+      case Axis.vertical:
+        outputMargin = EdgeInsets.fromLTRB(margin, cardMarginStart, margin, cardMarginEnd);
+        break;
+      case Axis.horizontal:
+        outputMargin = EdgeInsets.fromLTRB(cardMarginStart, margin, cardMarginEnd, margin);
+        break;
+    }
     return Container(
-      margin: isOn
-          ? EdgeInsets.only(top: cardMarginTop, bottom: cardMarginBottom)
-          : EdgeInsets.only(top: margin, bottom: margin),
+      margin: isOn ? outputMargin : EdgeInsets.all(margin),
       child: child,
     );
   }

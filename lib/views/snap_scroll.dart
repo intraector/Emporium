@@ -2,22 +2,34 @@ import 'package:Emporium/views/vivid_shadows/components/elastic_drag.dart';
 import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:Emporium/views/vivid_shadows/components/tappable_edges.dart';
 import 'package:Emporium/views/vivid_shadows/components/tappable_edges_with_shadows.dart';
-import 'package:Emporium/views/vivid_shadows/components/vivid_card.dart';
+import 'package:Emporium/views/vivid_shadows/vivid_card.dart';
 import 'package:flutter/material.dart';
 
 class SnapScroll extends StatefulWidget {
-  SnapScroll({this.screenWidth, this.shadowsIsOn, this.rotationIsOn, this.elasticIsOn})
-      : cardHeight = screenWidth * 1.479;
-  final double screenWidth;
+  SnapScroll({
+    @required this.cardWidth,
+    @required this.cardHeight,
+    this.isShadowsOn,
+    this.isRotationOn,
+    this.elasticIsOn,
+    this.viewportFraction = 1.0,
+    this.initialPage = 0,
+    this.onPageChanged,
+  });
+  final double cardWidth;
   final double cardHeight;
-  final bool shadowsIsOn;
-  final bool rotationIsOn;
+  final bool isShadowsOn;
+  final bool isRotationOn;
   final bool elasticIsOn;
+  final double viewportFraction;
+  final int initialPage;
+  final Function(int) onPageChanged;
   @override
   _SnapScrollState createState() => _SnapScrollState();
 }
 
 class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateMixin {
+  Axis scrollDirection = Axis.horizontal;
   List<int> data = [];
   PageController _pageController;
   ScrollController listContoller = ScrollController();
@@ -40,45 +52,69 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     _pageController = PageController(
-        initialPage: 1,
-        viewportFraction: (widget.cardHeight + 30) / MediaQuery.of(context).size.height);
+      initialPage: widget.initialPage, viewportFraction: widget.viewportFraction,
+      // viewportFraction: widget.cardHeight / MediaQuery.of(context).size.height,
+    );
     Widget listContent = PageView.builder(
         physics: BouncingScrollPhysics(),
         controller: _pageController,
         itemCount: 8,
-        scrollDirection: Axis.vertical,
+        scrollDirection: scrollDirection,
+        onPageChanged: widget.onPageChanged,
         itemBuilder: (context, index) {
-          double margin = 20.0;
+          double marginVertical = widget.cardHeight * 0.02;
+          double marginHorizontal = widget.cardWidth * 0.05;
           var count = (index / 3).toStringAsFixed(1).split('.').last;
-          Widget child = VividCard(
-            _normalizedOffset,
-            shadowsIsOn: widget.shadowsIsOn,
-            path: paths[count],
-            cardWidth: widget.screenWidth - margin * 2,
-            cardHeight: widget.cardHeight,
+          Widget child = Container(
+            // color: Colors.pink.withOpacity(0.3),
+            child: VividCard(
+              _normalizedOffset,
+              axis: scrollDirection,
+              shadowsIsOn: widget.isShadowsOn,
+              path: paths[count],
+              cardWidth: widget.cardWidth - marginVertical * 2,
+              cardHeight: widget.cardHeight - marginHorizontal * 2,
+            ),
           );
-          return ElasticDrag(
-            itemIndex: index,
-            currentPage: currentPage,
-            offset: _normalizedOffset,
-            isOn: widget.elasticIsOn,
-            margin: 5.0,
-            elasticMargin: 20.0,
-            child: Rotation3d(
-              rotationX: widget.rotationIsOn ? (_normalizedOffset * _maxRotation) : 0,
-              child: widget.shadowsIsOn
-                  ? TappableEdgesWithShadows(
-                      child: child,
-                      width: widget.screenWidth,
-                      height: widget.cardHeight,
-                      margin: EdgeInsets.symmetric(horizontal: margin, vertical: 5.0),
-                    )
-                  : TappableEdges(
-                      child: child,
-                      width: widget.screenWidth,
-                      height: widget.cardHeight,
-                      margin: EdgeInsets.symmetric(horizontal: margin, vertical: 5.0),
-                    ),
+          return Center(
+            child: ElasticDrag(
+              itemIndex: index,
+              currentPage: currentPage,
+              offset: _normalizedOffset,
+              isOn: widget.elasticIsOn,
+              margin: 5.0,
+              elasticMargin: scrollDirection == Axis.vertical
+                  ? widget.cardHeight * 0.2
+                  : widget.cardWidth * 0.1,
+              axis: scrollDirection,
+              child: Container(
+                // color: Colors.pink.withOpacity(0.3),
+                child: Rotation3d(
+                  rotationIsOn: widget.isRotationOn,
+                  rotationX:
+                      scrollDirection == Axis.vertical ? _normalizedOffset * _maxRotation : 0,
+                  rotationY:
+                      scrollDirection == Axis.horizontal ? -_normalizedOffset * _maxRotation : 0,
+                  child: widget.isShadowsOn
+                      ? TappableEdgesWithShadows(
+                          child: child,
+                          width: widget.cardWidth,
+                          height: widget.cardHeight,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: marginHorizontal, vertical: marginVertical),
+                        )
+                      : Container(
+                          // color: Colors.pink.withOpacity(0.3),
+                          child: TappableEdges(
+                            child: child,
+                            width: widget.cardWidth,
+                            height: widget.cardHeight,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: marginHorizontal, vertical: marginVertical),
+                          ),
+                        ),
+                ),
+              ),
             ),
           );
         });
@@ -86,11 +122,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
       onPointerUp: _handlePointerUp,
       child: NotificationListener(
         onNotification: _handleScrollNotifications,
-        child: Column(
-          children: [
-            Expanded(child: listContent),
-          ],
-        ),
+        child: Column(children: [Flexible(child: listContent)]),
       ),
     );
   }
@@ -145,5 +177,11 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
     _tweenController.reset();
     _tween.end = 0;
     _tweenController.forward();
+  }
+
+  @override
+  void dispose() {
+    _tweenController?.dispose();
+    super.dispose();
   }
 }
