@@ -49,7 +49,6 @@ class VividCard extends StatelessWidget {
   }
 
   Widget _buildCityImage() {
-    double offset = offsetRatio * maxOffsetVertical;
     double topButtonsVerticalMargin = maxOffsetVertical + 10.0;
     double leftMargin = maxOffsetHorizontal + 10.0;
     double rightMargin = maxOffsetHorizontal + 10.0;
@@ -58,6 +57,7 @@ class VividCard extends StatelessWidget {
     switch (axis) {
       case Axis.vertical:
         {
+          double offset = offsetRatio * maxOffsetVertical;
           topButtonsVerticalMargin = maxOffsetVertical - (offset / 1.75) + 10.0;
           bodyTextVerticalMargin = (offset / 1.5) + maxOffsetVertical + cardHeight * 0.15;
           userTileVerticalMargin = (offset / 1.75) + maxOffsetVertical;
@@ -65,6 +65,7 @@ class VividCard extends StatelessWidget {
         break;
       case Axis.horizontal:
         {
+          double offset = offsetRatio * maxOffsetHorizontal;
           leftMargin = (maxOffsetHorizontal + offset) + 10.0;
           rightMargin = (maxOffsetHorizontal - offset) + 10.0;
         }

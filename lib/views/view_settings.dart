@@ -56,7 +56,82 @@ class _ViewSettingsState extends State<ViewSettings> {
                   ),
                 ],
               ),
-              Divider(),
+              // Divider(),
+              SizedBox(height: 20.0),
+              Card(
+                margin: EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Grid', style: TextStyle(color: Colors.brown)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Rows: ${settings.rowsQty}',
+                              style: TextStyle(color: Colors.brown)),
+                        ),
+                        Expanded(
+                          child: Slider(
+                            label: settings.rowsQty.toString(),
+                            min: 1.0,
+                            max: 20.0,
+                            divisions: 20,
+                            onChanged: (value) => setState(() {
+                              settings.rowsQty = value.toInt();
+                              settings.generateDefaults();
+                            }),
+                            value: settings.rowsQty.toDouble(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Cards: ${settings.cardsQty}',
+                              style: TextStyle(color: Colors.brown)),
+                        ),
+                        Expanded(
+                          child: Slider(
+                            label: settings.cardsQty.toString(),
+                            min: 1.0,
+                            max: 20.0,
+                            divisions: 20,
+                            onChanged: (value) => setState(() {
+                              settings.cardsQty = value.toInt();
+                              settings.generateDefaults();
+                            }),
+                            value: settings.cardsQty.toDouble(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('General', style: TextStyle(color: Colors.brown)),
+                    ),
+                  ),
+                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -104,6 +179,33 @@ class _ViewSettingsState extends State<ViewSettings> {
                   ),
                 ],
               ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text('Card Height', style: TextStyle(color: Colors.brown)),
+                  ),
+                  Expanded(
+                    child: Slider(
+                      label: (double.parse(cardHeight.toStringAsPrecision(2)) * 100)
+                              .toStringAsFixed(0) +
+                          '% of card\'s width',
+                      min: 0.2,
+                      max: 2.0,
+                      divisions: 18,
+                      onChanged: (value) => setState(() {
+                        cardHeight = value;
+                        for (int index = 0; index < settings.cardHeightRatio.length; index++) {
+                          settings.cardHeightRatio[index] = value;
+                        }
+                      }),
+                      value: cardHeight,
+                    ),
+                  ),
+                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -130,33 +232,8 @@ class _ViewSettingsState extends State<ViewSettings> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Card Height', style: TextStyle(color: Colors.brown)),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      label: (double.parse(cardHeight.toStringAsPrecision(2)) * 100)
-                              .toStringAsFixed(0) +
-                          '% of card\'s width',
-                      min: 0.2,
-                      max: 2.0,
-                      divisions: 8,
-                      onChanged: (value) => setState(() {
-                        cardHeight = value;
-                        for (int index = 0; index < settings.cardHeightRatio.length; index++) {
-                          settings.cardHeightRatio[index] = value;
-                        }
-                      }),
-                      value: cardHeight,
-                    ),
-                  ),
-                ],
-              ),
               Divider(),
+              SizedBox(height: 20.0),
               GenerateRows(),
             ],
           ))
@@ -187,10 +264,7 @@ class _GenerateRowsState extends State<GenerateRows> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Rows', style: TextStyle(color: Colors.brown)),
-            ),
+            child: Text('Individual', style: TextStyle(color: Colors.brown)),
           ),
         ],
       ),
@@ -221,37 +295,13 @@ class _GenerateRowsState extends State<GenerateRows> {
                         child: Slider(
                           label:
                               (double.parse(settings.rowWidth[index].toStringAsPrecision(2)) * 100)
-                                      .toString() +
+                                      .toStringAsFixed(0) +
                                   '% of screen\'s width',
                           min: 0.2,
                           max: 1.0,
                           divisions: 8,
                           onChanged: (value) => setState(() => settings.rowWidth[index] = value),
                           value: settings.rowWidth[index],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text('Card Width', style: TextStyle(color: Colors.brown)),
-                      ),
-                      Expanded(
-                        child: Slider(
-                          label:
-                              (double.parse(settings.cardWidthRatio[index].toStringAsPrecision(2)) *
-                                          100)
-                                      .toString() +
-                                  '% of screen\'s width',
-                          min: 0.2,
-                          max: 1.0,
-                          divisions: 8,
-                          onChanged: (value) =>
-                              setState(() => settings.cardWidthRatio[index] = value),
-                          value: settings.cardWidthRatio[index],
                         ),
                       ),
                     ],
@@ -268,14 +318,38 @@ class _GenerateRowsState extends State<GenerateRows> {
                           label: (double.parse(
                                           settings.cardHeightRatio[index].toStringAsPrecision(2)) *
                                       100)
-                                  .toString() +
+                                  .toStringAsFixed(0) +
                               '% of card\'s width',
                           min: 0.2,
                           max: 2.0,
-                          divisions: 8,
+                          divisions: 18,
                           onChanged: (value) =>
                               setState(() => settings.cardHeightRatio[index] = value),
                           value: settings.cardHeightRatio[index],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text('Card Width', style: TextStyle(color: Colors.brown)),
+                      ),
+                      Expanded(
+                        child: Slider(
+                          label:
+                              (double.parse(settings.cardWidthRatio[index].toStringAsPrecision(2)) *
+                                          100)
+                                      .toStringAsFixed(0) +
+                                  '% of screen\'s width',
+                          min: 0.2,
+                          max: 1.0,
+                          divisions: 8,
+                          onChanged: (value) =>
+                              setState(() => settings.cardWidthRatio[index] = value),
+                          value: settings.cardWidthRatio[index],
                         ),
                       ),
                     ],

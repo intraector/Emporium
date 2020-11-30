@@ -1,9 +1,11 @@
+import 'package:Emporium/_constants/settings.dart';
 import 'package:Emporium/views/vivid_shadows/components/elastic_drag.dart';
 import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:Emporium/views/vivid_shadows/components/tappable_edges.dart';
 import 'package:Emporium/views/vivid_shadows/components/tappable_edges_with_shadows.dart';
 import 'package:Emporium/views/vivid_shadows/vivid_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class SnapScroll extends StatefulWidget {
   SnapScroll({
@@ -48,6 +50,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
     '3': 'assets/images/smoke.jpg',
     '7': 'assets/images/bananas.png',
   };
+  int cardQty = GetIt.I<Settings>().cardsQty;
 
   @override
   Widget build(BuildContext context) {
@@ -58,23 +61,20 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
     Widget listContent = PageView.builder(
         physics: BouncingScrollPhysics(),
         controller: _pageController,
-        itemCount: 8,
+        itemCount: cardQty,
         scrollDirection: scrollDirection,
         onPageChanged: widget.onPageChanged,
         itemBuilder: (context, index) {
           double marginVertical = widget.cardHeight * 0.02;
           double marginHorizontal = widget.cardWidth * 0.05;
           var count = (index / 3).toStringAsFixed(1).split('.').last;
-          Widget child = Container(
-            // color: Colors.pink.withOpacity(0.3),
-            child: VividCard(
-              _normalizedOffset,
-              axis: scrollDirection,
-              shadowsIsOn: widget.isShadowsOn,
-              path: paths[count],
-              cardWidth: widget.cardWidth - marginVertical * 2,
-              cardHeight: widget.cardHeight - marginHorizontal * 2,
-            ),
+          Widget child = VividCard(
+            _normalizedOffset,
+            axis: scrollDirection,
+            shadowsIsOn: widget.isShadowsOn,
+            path: paths[count],
+            cardWidth: widget.cardWidth - marginVertical * 2,
+            cardHeight: widget.cardHeight - marginHorizontal * 2,
           );
           return Center(
             child: ElasticDrag(
