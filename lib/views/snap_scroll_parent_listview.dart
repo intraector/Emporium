@@ -6,49 +6,64 @@ import 'package:get_it/get_it.dart';
 
 class SnapScrollParentListView extends StatefulWidget {
   SnapScrollParentListView({
-    this.initialPage = 0,
-    @required this.cellWidth,
-    @required this.cellHeight,
+    @required this.cells,
     this.isShadowsOn,
     this.isRotationOn,
     this.isElasticOn,
+    this.initialScrollOffset = 0.0,
   });
-  final double cellWidth;
   final bool isShadowsOn;
   final bool isRotationOn;
   final bool isElasticOn;
-  final double cellHeight;
-  final int initialPage;
+  final Cells cells;
+  final double initialScrollOffset;
   @override
   _SnapScrollParentListViewState createState() => _SnapScrollParentListViewState();
 }
 
 class _SnapScrollParentListViewState extends State<SnapScrollParentListView>
     with SingleTickerProviderStateMixin {
-  var cardWidthRatio = GetIt.I<Settings>().cardWidthRatio;
-  var cardHeightRatio = GetIt.I<Settings>().cardHeightRatio;
-  var horizontalViewportFraction = GetIt.I<Settings>().cellWidth;
+  var settings = GetIt.I<Settings>();
+  ScrollController controller;
+  double itemExtent;
+  ScrollPhysics physics;
+  @override
+  void initState() {
+    // itemExtent = widget.cells[0].height;
+    physics = CustomScrollPhysics(cells: widget.cells, parent: BouncingScrollPhysics());
+    controller = ScrollController(initialScrollOffset: widget.initialScrollOffset);
+    // controller.addListener(() {
+    //   var newExtent = settings.cells.itemExtent(controller.offset);
+    //   if (newExtent != itemExtent) {
+    //     setState(() {
+    //       itemExtent = newExtent;
+    //       print('---------- itemExtent : $itemExtent');
+    //       physics = CustomScrollPhysics(itemExtent: itemExtent, parent: BouncingScrollPhysics());
+    //     });
+    //   }
+    // });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        physics:
-            CustomScrollPhysics(itemDimension: widget.cellHeight, parent: BouncingScrollPhysics()),
-        itemCount: cardWidthRatio.length,
+        physics: physics,
+        itemCount: widget.cells.list.length,
+        controller: controller,
         scrollDirection: Axis.vertical,
-        itemExtent: widget.cellHeight,
-        itemBuilder: (context, index) => SnapScroll(
-              index: index,
-              initialPage: GetIt.I<Settings>().currentPage,
-              cardWidth: widget.cellWidth * cardWidthRatio[index],
-              cardHeight: widget.cellWidth * cardWidthRatio[index] * cardHeightRatio[index],
-              isShadowsOn: widget.isShadowsOn,
-              isRotationOn: widget.isRotationOn,
-              isElasticOn: widget.isElasticOn,
-              viewportFraction: horizontalViewportFraction[index],
-              onPageChanged: (page) => GetIt.I<Settings>().currentPage = page,
-              verticalPaddingRatio: 0.005,
-              horizontalPaddingRatio: 0.01,
+        // itemExtent: widget.cells[0].height,
+        itemBuilder: (context, index) => SizedBox(
+              height: widget.cells.list[index].height,
+              child: SnapScroll(
+                index: index,
+                initialPage: GetIt.I<Settings>().currentPage,
+                cell: widget.cells.list[index],
+                isShadowsOn: widget.isShadowsOn,
+                isRotationOn: widget.isRotationOn,
+                isElasticOn: widget.isElasticOn,
+                onPageChanged: (page) => settings.currentPage = page,
+              ),
             ));
   }
 }

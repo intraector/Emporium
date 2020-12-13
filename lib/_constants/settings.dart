@@ -1,26 +1,167 @@
+import 'package:flutter/foundation.dart';
+
 class Settings {
-  Settings() {
-    generateDefaults();
-  }
-  int currentPageParent = 0;
+  double parentOffset = 0;
   int currentPage = 0;
   bool isShadowsOn = false;
   bool isRotationOn = true;
   bool isElasticOn = true;
   double cellHeightRatio = 0.7;
   Effect effect = Effect.none;
-  List<double> cellWidth;
-  List<double> cardWidthRatio;
-  List<double> cardHeightRatio;
-
-  int rowsQty = 10;
-  int cardsQty = 8;
-
-  void generateDefaults() {
-    cellWidth = List.generate(rowsQty, (index) => 1.0);
-    cardWidthRatio = List.generate(rowsQty, (index) => 1.0);
-    cardHeightRatio = List.generate(rowsQty, (index) => 1.479);
-  }
+  var cells = Cells();
 }
 
 enum Effect { first, second, third, forth, none }
+
+class Cells {
+  double screenWidth = 0.0;
+  List<Cell> list = [];
+  var extents = <MapEntry<double, double>>[];
+  double itemExtent(double offset) {
+    double output;
+    var sumOfExtents = 0.0;
+    for (var cell in list) {
+      sumOfExtents += cell.height;
+      if (offset <= sumOfExtents) {
+        output = cell.height;
+        break;
+      }
+    }
+    return output;
+  }
+
+  MapEntry<double, double> getPage(double offset) {
+    MapEntry<double, double> output;
+    for (var entry in extents) {
+      if (offset >= entry.key && offset <= (entry.key + entry.value)) {
+        output = entry;
+      }
+    }
+    return output;
+  }
+
+  void generateExtents() {
+    extents.clear();
+    var sumOfExtents = 0.0;
+    for (var cell in list) {
+      extents.add(MapEntry(sumOfExtents, cell.height));
+      sumOfExtents += cell.height;
+    }
+  }
+
+  void generateCells() {
+    if (list.isEmpty) {
+      list = [
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+      ];
+      generateExtents();
+    }
+  }
+}
+
+class Cell {
+  Cell({
+    @required this.screenWidth,
+    @required this.widthRatio,
+    @required heightRatio,
+    @required this.paddingRatioH,
+    @required this.paddingRatioV,
+    this.initialPage = 0,
+    this.onUpdate,
+  }) : _heightRatio = heightRatio;
+  void Function() onUpdate;
+  double screenWidth;
+  double widthRatio;
+  double _heightRatio;
+  double get heightRatio => _heightRatio;
+  set heightRatio(double value) {
+    _heightRatio = value;
+    onUpdate();
+  }
+
+  double get width => screenWidth * widthRatio;
+  double get height => width * heightRatio;
+  double paddingRatioH;
+  double paddingRatioV;
+  int initialPage;
+  int cardsQty = 8;
+}

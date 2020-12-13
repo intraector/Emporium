@@ -1,31 +1,34 @@
+import 'package:Emporium/_constants/settings.dart';
 import 'package:flutter/material.dart';
 
 class CustomScrollPhysics extends ScrollPhysics {
-  final double itemDimension;
+  final Cells cells;
 
-  CustomScrollPhysics({this.itemDimension, ScrollPhysics parent}) : super(parent: parent);
+  CustomScrollPhysics({this.cells, ScrollPhysics parent}) : super(parent: parent);
 
   @override
   CustomScrollPhysics applyTo(ScrollPhysics ancestor) {
-    return CustomScrollPhysics(itemDimension: itemDimension, parent: buildParent(ancestor));
+    return CustomScrollPhysics(cells: cells, parent: buildParent(ancestor));
   }
 
-  double _getPage(ScrollPosition position) {
-    return position.pixels / itemDimension;
-  }
+  // double _getPage(ScrollPosition position) => position.pixels / cells.itemExtent(position.pixels);
 
-  double _getPixels(double page) {
-    return page * itemDimension;
-  }
+  // double _getPixels(double page) => page * cells.itemExtent;
 
   double _getTargetPixels(ScrollPosition position, Tolerance tolerance, double velocity) {
-    double page = _getPage(position);
+    // double page = _getPage(position);
+    var page = cells.getPage(position.pixels);
+    print('PAGE: ${page}');
+    var pixels = position.pixels;
     if (velocity < -tolerance.velocity) {
-      page -= 0.5;
+      // page -= 0.5;
+      pixels = page.key;
     } else if (velocity > tolerance.velocity) {
-      page += 0.5;
+      // page += 0.5;
+      pixels = page.key + page.value;
     }
-    return _getPixels(page.roundToDouble());
+    return pixels;
+    // return _getPixels(page.roundToDouble());
   }
 
   @override

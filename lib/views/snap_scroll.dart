@@ -10,33 +10,25 @@ import 'package:get_it/get_it.dart';
 
 class SnapScroll extends StatefulWidget {
   SnapScroll({
-    @required this.cardWidth,
-    @required this.cardHeight,
+    @required this.cell,
     this.isShadowsOn,
     this.isRotationOn,
     this.isElasticOn,
-    this.viewportFraction = 1.0,
     this.initialPage = 0,
     this.onPageChanged,
     this.index,
     this.maxRotation = 15.0,
-    this.verticalPaddingRatio = 0.02,
-    this.horizontalPaddingRatio = 0.02,
-  }) : pageController =
-            PageController(initialPage: initialPage, viewportFraction: viewportFraction);
-  final double cardWidth;
-  final double cardHeight;
+  }) : pageController = PageController(initialPage: initialPage, viewportFraction: cell.widthRatio);
   final bool isShadowsOn;
   final bool isRotationOn;
   final bool isElasticOn;
-  final double viewportFraction;
+  final Cell cell;
+
   final int initialPage;
   final Function(int) onPageChanged;
   final int index;
   final PageController pageController;
   final double maxRotation;
-  final double verticalPaddingRatio;
-  final double horizontalPaddingRatio;
 
   @override
   _SnapScrollState createState() => _SnapScrollState();
@@ -59,7 +51,6 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
     '3': 'assets/images/smoke.jpg',
     '7': 'assets/images/bananas.png',
   };
-  int cardQty = GetIt.I<Settings>().cardsQty;
   @override
   void initState() {
     focusedPage = widget.initialPage;
@@ -73,7 +64,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     Widget pageView = PageView.builder(
         controller: widget.pageController,
-        itemCount: cardQty,
+        itemCount: widget.cell.cardsQty,
         scrollDirection: scrollDirection,
         onPageChanged: widget.onPageChanged,
         dragStartBehavior: DragStartBehavior.down,
@@ -84,8 +75,8 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
             axis: scrollDirection,
             shadowsIsOn: widget.isShadowsOn,
             path: paths[count],
-            cardWidth: widget.cardWidth - (widget.cardWidth * widget.horizontalPaddingRatio),
-            cardHeight: widget.cardHeight - (widget.cardHeight * widget.verticalPaddingRatio),
+            cardWidth: widget.cell.width - (widget.cell.width * widget.cell.paddingRatioH),
+            cardHeight: widget.cell.height - (widget.cell.height * widget.cell.paddingRatioV),
           );
 
           return ElasticDragAlt(
@@ -93,8 +84,8 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
             axis: Axis.horizontal,
             distance: 15.0,
             offset: _normalizedOffset,
-            width: widget.cardWidth,
-            height: widget.cardHeight,
+            width: widget.cell.width,
+            height: widget.cell.height,
             child: Container(
               alignment: Alignment.center,
               transform: getTransfromation(effect, currentPageValue - page),
@@ -108,19 +99,19 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
                 child: widget.isShadowsOn
                     ? TappableEdgesWithShadows(
                         child: child,
-                        width: widget.cardWidth,
-                        height: widget.cardHeight,
+                        width: widget.cell.width,
+                        height: widget.cell.height,
                         margin: EdgeInsets.symmetric(
-                            horizontal: widget.cardWidth * widget.horizontalPaddingRatio,
-                            vertical: widget.cardHeight * widget.verticalPaddingRatio),
+                            horizontal: widget.cell.width * widget.cell.paddingRatioH,
+                            vertical: widget.cell.height * widget.cell.paddingRatioV),
                       )
                     : TappableEdges(
                         child: child,
-                        width: widget.cardWidth,
-                        height: widget.cardHeight,
+                        width: widget.cell.width,
+                        height: widget.cell.height,
                         margin: EdgeInsets.symmetric(
-                            horizontal: widget.cardWidth * widget.horizontalPaddingRatio,
-                            vertical: widget.cardHeight * widget.verticalPaddingRatio),
+                            horizontal: widget.cell.width * widget.cell.paddingRatioH,
+                            vertical: widget.cell.height * widget.cell.paddingRatioV),
                       ),
               ),
             ),

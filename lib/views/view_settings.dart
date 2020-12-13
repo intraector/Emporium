@@ -58,101 +58,144 @@ class _ViewSettingsState extends State<ViewSettings> {
               ),
               // Divider(),
               SizedBox(height: 20.0),
-              Card(
-                margin: EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Grid', style: TextStyle(color: Colors.brown)),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Rows: ${settings.rowsQty}',
-                              style: TextStyle(color: Colors.brown)),
-                        ),
-                        Expanded(
-                          child: Slider(
-                            label: settings.rowsQty.toString(),
-                            min: 1.0,
-                            max: 20.0,
-                            divisions: 20,
-                            onChanged: (value) => setState(() {
-                              settings.rowsQty = value.toInt();
-                              settings.generateDefaults();
-                            }),
-                            value: settings.rowsQty.toDouble(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Cards: ${settings.cardsQty}',
-                              style: TextStyle(color: Colors.brown)),
-                        ),
-                        Expanded(
-                          child: Slider(
-                            label: settings.cardsQty.toString(),
-                            min: 1.0,
-                            max: 20.0,
-                            divisions: 20,
-                            onChanged: (value) => setState(() {
-                              settings.cardsQty = value.toInt();
-                              settings.generateDefaults();
-                            }),
-                            value: settings.cardsQty.toDouble(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('General', style: TextStyle(color: Colors.brown)),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Cell Height', style: TextStyle(color: Colors.brown)),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      label: (double.parse(settings.cellHeightRatio.toStringAsPrecision(2)) * 100)
-                              .toStringAsFixed(0) +
-                          '% of screen\'s width',
-                      min: 0.4,
-                      max: 2.0,
-                      divisions: 16,
-                      onChanged: (value) => setState(() => settings.cellHeightRatio = value),
-                      value: settings.cellHeightRatio,
-                    ),
-                  ),
-                ],
-              ),
+              // Card(
+              // margin: EdgeInsets.all(8.0),
+              // child: Column(
+              // children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Flexible(
+              //             child: Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: Text('Grid', style: TextStyle(color: Colors.brown)),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.all(8.0),
+              //             child: Text('Rows: ${settings.rowsQty}',
+              //                 style: TextStyle(color: Colors.brown)),
+              //           ),
+              //           Expanded(
+              //             child: Slider(
+              //               label: settings.rowsQty.toString(),
+              //               min: 1.0,
+              //               max: 20.0,
+              //               divisions: 20,
+              //               onChanged: (value) => setState(() {
+              //                 settings.rowsQty = value.toInt();
+              //                 settings.generateDefaults();
+              //               }),
+              //               value: settings.rowsQty.toDouble(),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.all(8.0),
+              //             child: Text('Cards: ${settings.cardsQty}',
+              //                 style: TextStyle(color: Colors.brown)),
+              //           ),
+              //           Expanded(
+              //             child: Slider(
+              //               label: settings.cardsQty.toString(),
+              //               min: 1.0,
+              //               max: 20.0,
+              //               divisions: 20,
+              //               onChanged: (value) => setState(() {
+              //                 settings.cardsQty = value.toInt();
+              //                 settings.generateDefaults();
+              //               }),
+              //               value: settings.cardsQty.toDouble(),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 20.0),
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Flexible(
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Text('General', style: TextStyle(color: Colors.brown)),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Text('Cell Height', style: TextStyle(color: Colors.brown)),
+              //     ),
+              //     Expanded(
+              //       child: Slider(
+              //         label: (double.parse(settings.cellHeightRatio.toStringAsPrecision(2)) * 100)
+              //                 .toStringAsFixed(0) +
+              //             '% of screen\'s width',
+              //         min: 0.4,
+              //         max: 2.0,
+              //         divisions: 16,
+              //         onChanged: (value) => setState(() => settings.cellHeightRatio = value),
+              //         value: settings.cellHeightRatio,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Text('H. padding', style: TextStyle(color: Colors.brown)),
+              //     ),
+              //     Expanded(
+              //       child: Slider(
+              //         label: (double.parse(settings.cardPaddingRatioH.toStringAsPrecision(3)) * 100)
+              //                 .toStringAsFixed(1) +
+              //             '% of cards\'s width',
+              //         min: 0.01,
+              //         max: 0.05,
+              //         divisions: 4,
+              //         onChanged: (value) => setState(() => settings.cardPaddingRatioH = value),
+              //         value: settings.cardPaddingRatioH,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Text('V. padding', style: TextStyle(color: Colors.brown)),
+              //     ),
+              //     Expanded(
+              //       child: Slider(
+              //         label: (double.parse(settings.cardPaddingRatioV.toStringAsPrecision(3)) * 100)
+              //                 .toStringAsFixed(1) +
+              //             '% of cards\'s height',
+              //         min: 0.005,
+              //         max: 0.025,
+              //         divisions: 4,
+              //         onChanged: (value) => setState(() => settings.cardPaddingRatioV = value),
+              //         value: settings.cardPaddingRatioV,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Column(
                 children: [
                   Row(
@@ -254,85 +297,6 @@ class _ViewSettingsState extends State<ViewSettings> {
                   ),
                 ],
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Text('Row Width', style: TextStyle(color: Colors.brown)),
-              //     ),
-              //     Expanded(
-              //       child: Slider(
-              //         label:
-              //             (double.parse(rowWidth.toStringAsPrecision(2)) * 100).toStringAsFixed(0) +
-              //                 '% of screen\'s width',
-              //         min: 0.2,
-              //         max: 1.0,
-              //         divisions: 8,
-              //         onChanged: (value) => setState(() {
-              //           rowWidth = value;
-              //           for (int index = 0; index < settings.rowWidth.length; index++) {
-              //             settings.cardWidthRatio[index] = value;
-              //           }
-              //         }),
-              //         value: rowWidth,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Text('Card Height', style: TextStyle(color: Colors.brown)),
-              //     ),
-              //     Expanded(
-              //       child: Slider(
-              //         label: (double.parse(cardHeight.toStringAsPrecision(2)) * 100)
-              //                 .toStringAsFixed(0) +
-              //             '% of card\'s width',
-              //         min: 0.2,
-              //         max: 2.0,
-              //         divisions: 18,
-              //         onChanged: (value) => setState(() {
-              //           cardHeight = value;
-              //           for (int index = 0; index < settings.cardHeightRatio.length; index++) {
-              //             settings.cardHeightRatio[index] = value;
-              //           }
-              //         }),
-              //         value: cardHeight,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Text('Card Width', style: TextStyle(color: Colors.brown)),
-              //     ),
-              //     Expanded(
-              //       child: Slider(
-              //         label: (double.parse(cardWidth.toStringAsPrecision(2)) * 100)
-              //                 .toStringAsFixed(0) +
-              //             '% of screen\'s width',
-              //         min: 0.2,
-              //         max: 1.0,
-              //         divisions: 8,
-              //         onChanged: (value) => setState(() {
-              //           cardWidth = value;
-              //           for (int index = 0; index < settings.cardWidthRatio.length; index++) {
-              //             settings.cardWidthRatio[index] = value;
-              //           }
-              //         }),
-              //         value: cardWidth,
-              //       ),
-              //     ),
-              //   ],
-              // ),
               Divider(),
               SizedBox(height: 20.0),
               GenerateRows(),
@@ -371,7 +335,7 @@ class _GenerateRowsState extends State<GenerateRows> {
       ),
       SizedBox(height: 20.0),
     ];
-    for (int index = 0; index < settings.cardWidthRatio.length; index++) {
+    for (int index = 0; index < settings.cells.list.length; index++) {
       output.add(Card(
         child: Row(
           children: [
@@ -385,24 +349,49 @@ class _GenerateRowsState extends State<GenerateRows> {
             Expanded(
               child: Column(
                 children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(left: 8.0),
+                  //       child: Text('Cell Width', style: TextStyle(color: Colors.brown)),
+                  //     ),
+                  //     Expanded(
+                  //       child: Slider(
+                  //         label:
+                  //             (double.parse(settings.cellWidth[index].toStringAsPrecision(2)) * 100)
+                  //                     .toStringAsFixed(0) +
+                  //                 '% of screen\'s width',
+                  //         min: 0.2,
+                  //         max: 1.0,
+                  //         divisions: 8,
+                  //         onChanged: (value) => setState(() => settings.cellWidth[index] = value),
+                  //         value: settings.cellWidth[index],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text('Cell Width', style: TextStyle(color: Colors.brown)),
+                        child: Text('Card Width', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
                         child: Slider(
-                          label:
-                              (double.parse(settings.cellWidth[index].toStringAsPrecision(2)) * 100)
-                                      .toStringAsFixed(0) +
-                                  '% of screen\'s width',
-                          min: 0.2,
+                          label: (double.parse((settings.cells.list[index].widthRatio)
+                                          .toStringAsPrecision(2)) *
+                                      100)
+                                  .toStringAsFixed(0) +
+                              '% of screen\'s width',
+                          min: 0.4,
                           max: 1.0,
-                          divisions: 8,
-                          onChanged: (value) => setState(() => settings.cellWidth[index] = value),
-                          value: settings.cellWidth[index],
+                          divisions: 6,
+                          onChanged: (value) =>
+                              setState(() => settings.cells.list[index].widthRatio = value),
+                          value: settings.cells.list[index].widthRatio,
                         ),
                       ),
                     ],
@@ -416,8 +405,8 @@ class _GenerateRowsState extends State<GenerateRows> {
                       ),
                       Expanded(
                         child: Slider(
-                          label: (double.parse(
-                                          settings.cardHeightRatio[index].toStringAsPrecision(2)) *
+                          label: (double.parse(settings.cells.list[index].heightRatio
+                                          .toStringAsPrecision(2)) *
                                       100)
                                   .toStringAsFixed(0) +
                               '% of card\'s width',
@@ -425,32 +414,8 @@ class _GenerateRowsState extends State<GenerateRows> {
                           max: 2.0,
                           divisions: 18,
                           onChanged: (value) =>
-                              setState(() => settings.cardHeightRatio[index] = value),
-                          value: settings.cardHeightRatio[index],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text('Card Width', style: TextStyle(color: Colors.brown)),
-                      ),
-                      Expanded(
-                        child: Slider(
-                          label:
-                              (double.parse(settings.cardWidthRatio[index].toStringAsPrecision(2)) *
-                                          100)
-                                      .toStringAsFixed(0) +
-                                  '% of screen\'s width',
-                          min: 0.2,
-                          max: 1.0,
-                          divisions: 8,
-                          onChanged: (value) =>
-                              setState(() => settings.cardWidthRatio[index] = value),
-                          value: settings.cardWidthRatio[index],
+                              setState(() => settings.cells.list[index].heightRatio = value),
+                          value: settings.cells.list[index].heightRatio,
                         ),
                       ),
                     ],
