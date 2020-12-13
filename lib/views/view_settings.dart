@@ -137,101 +137,202 @@ class _ViewSettingsState extends State<ViewSettings> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Row Height', style: TextStyle(color: Colors.brown)),
+                    child: Text('Cell Height', style: TextStyle(color: Colors.brown)),
                   ),
                   Expanded(
                     child: Slider(
-                      label: (double.parse(settings.rowHeight.toStringAsPrecision(2)) * 100)
-                              .toStringAsFixed(0) +
-                          '% of screen\'s height',
-                      min: 0.2,
-                      max: 1.0,
-                      divisions: 8,
-                      onChanged: (value) => setState(() => settings.rowHeight = value),
-                      value: settings.rowHeight,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Row Width', style: TextStyle(color: Colors.brown)),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      label:
-                          (double.parse(rowWidth.toStringAsPrecision(2)) * 100).toStringAsFixed(0) +
-                              '% of screen\'s width',
-                      min: 0.2,
-                      max: 1.0,
-                      divisions: 8,
-                      onChanged: (value) => setState(() {
-                        rowWidth = value;
-                        for (int index = 0; index < settings.rowWidth.length; index++) {
-                          settings.cardWidthRatio[index] = value;
-                        }
-                      }),
-                      value: rowWidth,
-                    ),
-                  ),
-                ],
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Card Height', style: TextStyle(color: Colors.brown)),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      label: (double.parse(cardHeight.toStringAsPrecision(2)) * 100)
-                              .toStringAsFixed(0) +
-                          '% of card\'s width',
-                      min: 0.2,
-                      max: 2.0,
-                      divisions: 18,
-                      onChanged: (value) => setState(() {
-                        cardHeight = value;
-                        for (int index = 0; index < settings.cardHeightRatio.length; index++) {
-                          settings.cardHeightRatio[index] = value;
-                        }
-                      }),
-                      value: cardHeight,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Card Width', style: TextStyle(color: Colors.brown)),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      label: (double.parse(cardWidth.toStringAsPrecision(2)) * 100)
+                      label: (double.parse(settings.cellHeightRatio.toStringAsPrecision(2)) * 100)
                               .toStringAsFixed(0) +
                           '% of screen\'s width',
-                      min: 0.2,
-                      max: 1.0,
-                      divisions: 8,
-                      onChanged: (value) => setState(() {
-                        cardWidth = value;
-                        for (int index = 0; index < settings.cardWidthRatio.length; index++) {
-                          settings.cardWidthRatio[index] = value;
-                        }
-                      }),
-                      value: cardWidth,
+                      min: 0.4,
+                      max: 2.0,
+                      divisions: 16,
+                      onChanged: (value) => setState(() => settings.cellHeightRatio = value),
+                      value: settings.cellHeightRatio,
                     ),
                   ),
                 ],
               ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text('Effect', style: TextStyle(color: Colors.brown)),
+                      )
+                    ],
+                  ),
+                  Wrap(
+                    children: [
+                      Card(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text('None', style: TextStyle(color: Colors.brown)),
+                            ),
+                            Radio(
+                              groupValue: true,
+                              onChanged: (isChecked) =>
+                                  setState(() => settings.effect = Effect.none),
+                              value: settings.effect == Effect.none,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Card(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text('First', style: TextStyle(color: Colors.brown)),
+                            ),
+                            Radio(
+                              groupValue: true,
+                              onChanged: (isChecked) =>
+                                  setState(() => settings.effect = Effect.first),
+                              value: settings.effect == Effect.first,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('Second', style: TextStyle(color: Colors.brown)),
+                              Radio(
+                                groupValue: true,
+                                onChanged: (isChecked) =>
+                                    setState(() => settings.effect = Effect.second),
+                                value: settings.effect == Effect.second,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text('Third', style: TextStyle(color: Colors.brown)),
+                            ),
+                            Radio(
+                              groupValue: true,
+                              onChanged: (isChecked) =>
+                                  setState(() => settings.effect = Effect.third),
+                              value: settings.effect == Effect.third,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Card(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text('Forth', style: TextStyle(color: Colors.brown)),
+                            ),
+                            Radio(
+                              groupValue: true,
+                              onChanged: (isChecked) =>
+                                  setState(() => settings.effect = Effect.forth),
+                              value: settings.effect == Effect.forth,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Text('Row Width', style: TextStyle(color: Colors.brown)),
+              //     ),
+              //     Expanded(
+              //       child: Slider(
+              //         label:
+              //             (double.parse(rowWidth.toStringAsPrecision(2)) * 100).toStringAsFixed(0) +
+              //                 '% of screen\'s width',
+              //         min: 0.2,
+              //         max: 1.0,
+              //         divisions: 8,
+              //         onChanged: (value) => setState(() {
+              //           rowWidth = value;
+              //           for (int index = 0; index < settings.rowWidth.length; index++) {
+              //             settings.cardWidthRatio[index] = value;
+              //           }
+              //         }),
+              //         value: rowWidth,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Text('Card Height', style: TextStyle(color: Colors.brown)),
+              //     ),
+              //     Expanded(
+              //       child: Slider(
+              //         label: (double.parse(cardHeight.toStringAsPrecision(2)) * 100)
+              //                 .toStringAsFixed(0) +
+              //             '% of card\'s width',
+              //         min: 0.2,
+              //         max: 2.0,
+              //         divisions: 18,
+              //         onChanged: (value) => setState(() {
+              //           cardHeight = value;
+              //           for (int index = 0; index < settings.cardHeightRatio.length; index++) {
+              //             settings.cardHeightRatio[index] = value;
+              //           }
+              //         }),
+              //         value: cardHeight,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Text('Card Width', style: TextStyle(color: Colors.brown)),
+              //     ),
+              //     Expanded(
+              //       child: Slider(
+              //         label: (double.parse(cardWidth.toStringAsPrecision(2)) * 100)
+              //                 .toStringAsFixed(0) +
+              //             '% of screen\'s width',
+              //         min: 0.2,
+              //         max: 1.0,
+              //         divisions: 8,
+              //         onChanged: (value) => setState(() {
+              //           cardWidth = value;
+              //           for (int index = 0; index < settings.cardWidthRatio.length; index++) {
+              //             settings.cardWidthRatio[index] = value;
+              //           }
+              //         }),
+              //         value: cardWidth,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Divider(),
               SizedBox(height: 20.0),
               GenerateRows(),
@@ -289,19 +390,19 @@ class _GenerateRowsState extends State<GenerateRows> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text('Row Width', style: TextStyle(color: Colors.brown)),
+                        child: Text('Cell Width', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
                         child: Slider(
                           label:
-                              (double.parse(settings.rowWidth[index].toStringAsPrecision(2)) * 100)
+                              (double.parse(settings.cellWidth[index].toStringAsPrecision(2)) * 100)
                                       .toStringAsFixed(0) +
                                   '% of screen\'s width',
                           min: 0.2,
                           max: 1.0,
                           divisions: 8,
-                          onChanged: (value) => setState(() => settings.rowWidth[index] = value),
-                          value: settings.rowWidth[index],
+                          onChanged: (value) => setState(() => settings.cellWidth[index] = value),
+                          value: settings.cellWidth[index],
                         ),
                       ),
                     ],

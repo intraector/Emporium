@@ -1,14 +1,18 @@
 import 'package:Emporium/_constants/settings.dart';
+import 'package:Emporium/common_components/multi_gesture_detector.dart';
 import 'package:Emporium/views/snap_scroll.dart';
 import 'package:Emporium/views/vivid_shadows/components/bouncing_physics.dart';
 import 'package:Emporium/views/vivid_shadows/components/clamping_physics.dart';
-import 'package:Emporium/views/vivid_shadows/components/custom_page_view/custom_page_view.dart'
-    as cPV;
+import 'package:Emporium/views/vivid_shadows/components/custom_page_view/custom_scroll_physics.dart';
+import 'package:Emporium/views/vivid_shadows/components/custom_page_view/stage_scroll_physics.dart';
+// import 'package:Emporium/views/vivid_shadows/components/custom_page_view/custom_page_view.dart'
+// as cPV;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class SnapScrollParent extends StatefulWidget {
-  SnapScrollParent({
+class SnapScrollParentGridView extends StatefulWidget {
+  SnapScrollParentGridView({
     this.cardWidth,
     this.isShadowsOn,
     this.isRotationOn,
@@ -25,14 +29,14 @@ class SnapScrollParent extends StatefulWidget {
   final double viewportFraction;
   final int initialPage;
   @override
-  _SnapScrollParentState createState() => _SnapScrollParentState();
+  _SnapScrollParentGridViewState createState() => _SnapScrollParentGridViewState();
 }
 
-class _SnapScrollParentState extends State<SnapScrollParent> {
-  cPV.PageController _pageController;
+class _SnapScrollParentGridViewState extends State<SnapScrollParentGridView> {
+  PageController _pageController;
   @override
   void initState() {
-    _pageController = cPV.PageController(
+    _pageController = PageController(
         initialPage: GetIt.I<Settings>().currentPageParent,
         viewportFraction: widget.viewportFraction);
     super.initState();
@@ -46,7 +50,7 @@ class _SnapScrollParentState extends State<SnapScrollParent> {
 
   @override
   Widget build(BuildContext context) {
-    return cPV.CustomPageView.builder(
+    return PageView.builder(
         // physics: PageScrollPhysics(),
         physics: BouncingPhysics(),
         // physics: NeverScrollableScrollPhysics(),
@@ -54,7 +58,6 @@ class _SnapScrollParentState extends State<SnapScrollParent> {
         // physics: ClampingScrollPhysics(),
         // physics: StageScrollingPhysics(),
         controller: _pageController,
-        pageSnapping: false,
         itemCount: cardWidthRatio.length,
         // dragStartBehavior: DragStartBehavior.down,
         scrollDirection: Axis.vertical,

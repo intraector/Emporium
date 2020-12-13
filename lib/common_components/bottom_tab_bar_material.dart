@@ -19,7 +19,7 @@ class BottomTabBarMaterial extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: Icon(CupertinoIcons.home),
+          icon: Icon(Icons.home),
           iconSize: _iconSize,
           disabledColor: _inactiveColor,
           color: _disabledColor,

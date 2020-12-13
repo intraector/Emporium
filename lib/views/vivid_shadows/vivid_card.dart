@@ -89,14 +89,19 @@ class VividCard extends StatelessWidget {
                 ? TopButtonsWithShadows(width: cardWidth)
                 : TopButtons(width: cardWidth),
           ),
-          Container(
-            margin: EdgeInsets.only(
-              // top: bodyTextVerticalMargin,
-              bottom: bodyTextVerticalMargin,
-              left: leftMargin,
-              right: rightMargin,
+          Positioned(
+            // left: leftMargin,
+            // right: rightMargin,
+            child: Container(
+              width: cardWidth,
+              margin: EdgeInsets.only(
+                // top: bodyTextVerticalMargin,
+                bottom: bodyTextVerticalMargin,
+                left: cardWidth * 0.05,
+                right: cardWidth * 0.05,
+              ),
+              child: BodyText(width: cardWidth, height: cardHeight),
             ),
-            child: BodyText(width: cardWidth, height: cardHeight),
           ),
           Container(
             margin: EdgeInsets.fromLTRB(leftMargin, 0.0, rightMargin, userTileVerticalMargin),

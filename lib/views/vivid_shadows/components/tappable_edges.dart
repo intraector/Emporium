@@ -99,6 +99,13 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
       ],
     );
   }
+
+  @override
+  void dispose() {
+    hController.dispose();
+    vController.dispose();
+    super.dispose();
+  }
 }
 
 extension IsInLeftArea on Offset {

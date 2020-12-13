@@ -7,8 +7,9 @@ class Settings {
   bool isShadowsOn = false;
   bool isRotationOn = true;
   bool isElasticOn = true;
-  double rowHeight = 0.7;
-  List<double> rowWidth;
+  double cellHeightRatio = 0.7;
+  Effect effect = Effect.none;
+  List<double> cellWidth;
   List<double> cardWidthRatio;
   List<double> cardHeightRatio;
 
@@ -16,8 +17,10 @@ class Settings {
   int cardsQty = 8;
 
   void generateDefaults() {
-    rowWidth = List.generate(rowsQty, (index) => 1.0);
+    cellWidth = List.generate(rowsQty, (index) => 1.0);
     cardWidthRatio = List.generate(rowsQty, (index) => 1.0);
     cardHeightRatio = List.generate(rowsQty, (index) => 1.479);
   }
 }
+
+enum Effect { first, second, third, forth, none }

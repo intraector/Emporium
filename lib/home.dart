@@ -2,6 +2,8 @@ import 'package:Emporium/_constants/routes.dart';
 import 'package:Emporium/_constants/settings.dart';
 import 'package:Emporium/common_components/bottom_tab_bar_material.dart';
 import 'package:Emporium/views/snap_scroll_parent.dart';
+import 'package:Emporium/views/snap_scroll_parent_gridview.dart';
+import 'package:Emporium/views/snap_scroll_parent_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -23,15 +25,16 @@ class _ViewHomeState extends State<ViewHome> {
 
       body: SafeArea(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: SnapScrollParent(
-                cardWidth: MediaQuery.of(context).size.width,
+              child: SnapScrollParentListView(
+                initialPage: GetIt.I<Settings>().currentPageParent,
+                cellWidth: MediaQuery.of(context).size.width,
+                cellHeight: MediaQuery.of(context).size.width * settings.cellHeightRatio,
                 isShadowsOn: settings.isShadowsOn,
                 isRotationOn: settings.isRotationOn,
                 isElasticOn: settings.isElasticOn,
-                initialPage: GetIt.I<Settings>().currentPageParent,
-                viewportFraction: settings.rowHeight,
               ),
             ),
           ],
