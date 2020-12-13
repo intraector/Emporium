@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 
 class Settings {
   double parentOffset = 0;
-  int currentPage = 0;
   bool isShadowsOn = false;
   bool isRotationOn = true;
   bool isElasticOn = true;
-  double cellHeightRatio = 0.7;
+  double cellHeightRatio = 1.0;
   Effect effect = Effect.none;
   var cells = Cells();
 }
@@ -55,7 +54,50 @@ class Cells {
         Cell(
           screenWidth: screenWidth,
           heightRatio: 1.0,
+          widthRatio: 1.0,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.7,
           widthRatio: 0.7,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+          initialPage: 1,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 0.5,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+          initialPage: 2,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 2.0,
+          widthRatio: 1.0,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 0.5,
+          widthRatio: 1.0,
+          paddingRatioH: 0.01,
+          paddingRatioV: 0.005,
+          onUpdate: generateExtents,
+          initialPage: 2,
+        ),
+        Cell(
+          screenWidth: screenWidth,
+          heightRatio: 1.0,
+          widthRatio: 1.0,
           paddingRatioH: 0.01,
           paddingRatioV: 0.005,
           onUpdate: generateExtents,
@@ -63,7 +105,7 @@ class Cells {
         Cell(
           screenWidth: screenWidth,
           heightRatio: 1.0,
-          widthRatio: 0.7,
+          widthRatio: 1.0,
           paddingRatioH: 0.01,
           paddingRatioV: 0.005,
           onUpdate: generateExtents,
@@ -71,7 +113,7 @@ class Cells {
         Cell(
           screenWidth: screenWidth,
           heightRatio: 1.0,
-          widthRatio: 0.7,
+          widthRatio: 1.0,
           paddingRatioH: 0.01,
           paddingRatioV: 0.005,
           onUpdate: generateExtents,
@@ -79,7 +121,7 @@ class Cells {
         Cell(
           screenWidth: screenWidth,
           heightRatio: 1.0,
-          widthRatio: 0.7,
+          widthRatio: 1.0,
           paddingRatioH: 0.01,
           paddingRatioV: 0.005,
           onUpdate: generateExtents,
@@ -87,47 +129,7 @@ class Cells {
         Cell(
           screenWidth: screenWidth,
           heightRatio: 1.0,
-          widthRatio: 0.7,
-          paddingRatioH: 0.01,
-          paddingRatioV: 0.005,
-          onUpdate: generateExtents,
-        ),
-        Cell(
-          screenWidth: screenWidth,
-          heightRatio: 1.0,
-          widthRatio: 0.7,
-          paddingRatioH: 0.01,
-          paddingRatioV: 0.005,
-          onUpdate: generateExtents,
-        ),
-        Cell(
-          screenWidth: screenWidth,
-          heightRatio: 1.0,
-          widthRatio: 0.7,
-          paddingRatioH: 0.01,
-          paddingRatioV: 0.005,
-          onUpdate: generateExtents,
-        ),
-        Cell(
-          screenWidth: screenWidth,
-          heightRatio: 1.0,
-          widthRatio: 0.7,
-          paddingRatioH: 0.01,
-          paddingRatioV: 0.005,
-          onUpdate: generateExtents,
-        ),
-        Cell(
-          screenWidth: screenWidth,
-          heightRatio: 1.0,
-          widthRatio: 0.7,
-          paddingRatioH: 0.01,
-          paddingRatioV: 0.005,
-          onUpdate: generateExtents,
-        ),
-        Cell(
-          screenWidth: screenWidth,
-          heightRatio: 1.0,
-          widthRatio: 0.7,
+          widthRatio: 1.0,
           paddingRatioH: 0.01,
           paddingRatioV: 0.005,
           onUpdate: generateExtents,
@@ -158,10 +160,11 @@ class Cell {
     onUpdate();
   }
 
+  int initialPage;
+
   double get width => screenWidth * widthRatio;
   double get height => width * heightRatio;
   double paddingRatioH;
   double paddingRatioV;
-  int initialPage;
   int cardsQty = 8;
 }

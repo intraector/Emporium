@@ -349,35 +349,12 @@ class _GenerateRowsState extends State<GenerateRows> {
             Expanded(
               child: Column(
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(left: 8.0),
-                  //       child: Text('Cell Width', style: TextStyle(color: Colors.brown)),
-                  //     ),
-                  //     Expanded(
-                  //       child: Slider(
-                  //         label:
-                  //             (double.parse(settings.cellWidth[index].toStringAsPrecision(2)) * 100)
-                  //                     .toStringAsFixed(0) +
-                  //                 '% of screen\'s width',
-                  //         min: 0.2,
-                  //         max: 1.0,
-                  //         divisions: 8,
-                  //         onChanged: (value) => setState(() => settings.cellWidth[index] = value),
-                  //         value: settings.cellWidth[index],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text('Card Width', style: TextStyle(color: Colors.brown)),
+                        child: Text('Width', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
                         child: Slider(
@@ -401,7 +378,7 @@ class _GenerateRowsState extends State<GenerateRows> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text('Card Height', style: TextStyle(color: Colors.brown)),
+                        child: Text('Height', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
                         child: Slider(
@@ -416,6 +393,54 @@ class _GenerateRowsState extends State<GenerateRows> {
                           onChanged: (value) =>
                               setState(() => settings.cells.list[index].heightRatio = value),
                           value: settings.cells.list[index].heightRatio,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text('Padding H.', style: TextStyle(color: Colors.brown)),
+                      ),
+                      Expanded(
+                        child: Slider(
+                          label: (double.parse(settings.cells.list[index].paddingRatioH
+                                          .toStringAsPrecision(2)) *
+                                      100)
+                                  .toStringAsFixed(0) +
+                              '% of card\'s width',
+                          min: 0.01,
+                          max: 0.1,
+                          divisions: 9,
+                          onChanged: (value) =>
+                              setState(() => settings.cells.list[index].paddingRatioH = value),
+                          value: settings.cells.list[index].paddingRatioH,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text('Padding V.', style: TextStyle(color: Colors.brown)),
+                      ),
+                      Expanded(
+                        child: Slider(
+                          label: (double.parse(settings.cells.list[index].paddingRatioV
+                                          .toStringAsPrecision(3)) *
+                                      100)
+                                  .toStringAsFixed(1) +
+                              '% of card\'s width',
+                          min: 0.005,
+                          max: 0.05,
+                          divisions: 9,
+                          onChanged: (value) =>
+                              setState(() => settings.cells.list[index].paddingRatioV = value),
+                          value: settings.cells.list[index].paddingRatioV,
                         ),
                       ),
                     ],

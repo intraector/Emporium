@@ -11,30 +11,19 @@ class CustomScrollPhysics extends ScrollPhysics {
     return CustomScrollPhysics(cells: cells, parent: buildParent(ancestor));
   }
 
-  // double _getPage(ScrollPosition position) => position.pixels / cells.itemExtent(position.pixels);
-
-  // double _getPixels(double page) => page * cells.itemExtent;
-
   double _getTargetPixels(ScrollPosition position, Tolerance tolerance, double velocity) {
-    // double page = _getPage(position);
     var page = cells.getPage(position.pixels);
-    print('PAGE: ${page}');
     var pixels = position.pixels;
     if (velocity < -tolerance.velocity) {
-      // page -= 0.5;
       pixels = page.key;
     } else if (velocity > tolerance.velocity) {
-      // page += 0.5;
       pixels = page.key + page.value;
     }
     return pixels;
-    // return _getPixels(page.roundToDouble());
   }
 
   @override
   Simulation createBallisticSimulation(ScrollMetrics position, double velocity) {
-    // If we're out of range and not headed back in range, defer to the parent
-    // ballistics, which should put us back in range at a page boundary.
     if ((velocity <= 0.0 && position.pixels <= position.minScrollExtent) ||
         (velocity >= 0.0 && position.pixels >= position.maxScrollExtent))
       return super.createBallisticSimulation(position, velocity);

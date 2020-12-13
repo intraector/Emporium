@@ -82,7 +82,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
           return ElasticDragAlt(
             isOn: (widget.isElasticOn && focusedPage == page),
             axis: Axis.horizontal,
-            distance: 15.0,
+            distance: 30.0,
             offset: _normalizedOffset,
             width: widget.cell.width,
             height: widget.cell.height,

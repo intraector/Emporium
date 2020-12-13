@@ -26,43 +26,32 @@ class _SnapScrollParentListViewState extends State<SnapScrollParentListView>
   var settings = GetIt.I<Settings>();
   ScrollController controller;
   double itemExtent;
-  ScrollPhysics physics;
   @override
   void initState() {
-    // itemExtent = widget.cells[0].height;
-    physics = CustomScrollPhysics(cells: widget.cells, parent: BouncingScrollPhysics());
     controller = ScrollController(initialScrollOffset: widget.initialScrollOffset);
-    // controller.addListener(() {
-    //   var newExtent = settings.cells.itemExtent(controller.offset);
-    //   if (newExtent != itemExtent) {
-    //     setState(() {
-    //       itemExtent = newExtent;
-    //       print('---------- itemExtent : $itemExtent');
-    //       physics = CustomScrollPhysics(itemExtent: itemExtent, parent: BouncingScrollPhysics());
-    //     });
-    //   }
-    // });
+    controller.addListener(() {
+      settings.parentOffset = controller.offset;
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        physics: physics,
+        physics: CustomScrollPhysics(cells: widget.cells, parent: BouncingScrollPhysics()),
         itemCount: widget.cells.list.length,
         controller: controller,
         scrollDirection: Axis.vertical,
-        // itemExtent: widget.cells[0].height,
         itemBuilder: (context, index) => SizedBox(
               height: widget.cells.list[index].height,
               child: SnapScroll(
                 index: index,
-                initialPage: GetIt.I<Settings>().currentPage,
+                initialPage: settings.cells.list[index].initialPage,
                 cell: widget.cells.list[index],
                 isShadowsOn: widget.isShadowsOn,
                 isRotationOn: widget.isRotationOn,
                 isElasticOn: widget.isElasticOn,
-                onPageChanged: (page) => settings.currentPage = page,
+                onPageChanged: (page) => settings.cells.list[index].initialPage = page,
               ),
             ));
   }
