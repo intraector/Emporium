@@ -3,12 +3,18 @@ import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class TappableEdges extends StatefulWidget {
-  TappableEdges(
-      {@required this.child, @required this.width, @required this.height, @required this.margin});
+  TappableEdges({
+    @required this.child,
+    @required this.width,
+    @required this.height,
+    @required this.margin,
+    this.onTap,
+  });
   final Widget child;
   final double width;
   final double height;
   final EdgeInsetsGeometry margin;
+  final Function() onTap;
 
   @override
   _TappableEdgesState createState() => _TappableEdgesState();
@@ -24,6 +30,8 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
 
   AnimationController vController;
   Animation<double> vAnimation;
+
+  bool hasMoved = false;
 
   @override
   void initState() {
@@ -72,26 +80,44 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
               child: Container(
                   // color: Colors.pink,
                   ),
+              onMove: (event) {
+                if (event.localDelta.distance != 0.0) hasMoved = true;
+                // print('---------- onMove has moved: $hasMoved | event.distance: ${event.delta.distance}');
+              },
               onDown: (event) {
                 final RenderBox referenceBox = context.findRenderObject();
                 var localPosition = referenceBox.globalToLocal(event.position);
+                bool isOnEdge = false;
 
                 if (localPosition.isInLeftArea(constraints: constraints)) {
+                  isOnEdge = true;
                   hController.animateTo(0.0);
                 }
                 if (localPosition.isInRightArea(constraints: constraints)) {
+                  isOnEdge = true;
                   hController.animateTo(1.0);
                 }
                 if (localPosition.isInTopArea(constraints: constraints)) {
+                  isOnEdge = true;
                   vController.animateTo(0.0);
                 }
                 if (localPosition.isInBottomArea(constraints: constraints)) {
+                  isOnEdge = true;
                   vController.animateTo(1.0);
+                }
+                if (!isOnEdge) {
+                  print('---------- center');
+                  // widget.onTap();
+                } else {
+                  print('---------- on edge');
                 }
               },
               onUp: (event) {
+                print('---------- onUp has moved: $hasMoved');
                 hController.animateTo(0.5);
                 vController.animateTo(0.5);
+                if (!hasMoved) widget.onTap();
+                hasMoved = false;
               },
             );
           }),

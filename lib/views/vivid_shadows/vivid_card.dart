@@ -1,3 +1,4 @@
+import 'package:Emporium/views/card_details/card_details.dart';
 import 'package:Emporium/views/vivid_shadows/components/background_picture.dart';
 import 'package:Emporium/views/vivid_shadows/components/body_text.dart';
 import 'package:Emporium/views/vivid_shadows/components/top_buttons.dart';
@@ -13,6 +14,7 @@ class VividCard extends StatelessWidget {
   final double cardHeight;
   final String path;
   final Axis axis;
+  final String uid;
 
   const VividCard(
     this.offsetRatio, {
@@ -22,6 +24,7 @@ class VividCard extends StatelessWidget {
     @required this.path,
     @required this.shadowsIsOn,
     @required this.axis,
+    @required this.uid,
   })  : maxOffsetVertical = cardWidth * 0.06,
         maxOffsetHorizontal = cardHeight * 0.06,
         super(key: key);
@@ -40,7 +43,10 @@ class VividCard extends StatelessWidget {
         // overflow: Overflow.visible,
         alignment: Alignment.center,
         children: <Widget>[
-          BackgroundPicture(path: path),
+          Hero(
+            tag: uid,
+            child: BackgroundPicture(path: path),
+          ),
           _buildCityImage(),
           // City information
         ],

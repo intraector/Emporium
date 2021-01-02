@@ -1,4 +1,6 @@
 import 'package:Emporium/_constants/settings.dart';
+import 'package:Emporium/views/card_details/card_details.dart';
+import 'package:Emporium/views/card_details/components/white_page_route.dart';
 import 'package:Emporium/views/vivid_shadows/components/elastic_drag_alt.dart';
 import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:Emporium/views/vivid_shadows/components/tappable_edges.dart';
@@ -69,9 +71,11 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
         onPageChanged: widget.onPageChanged,
         dragStartBehavior: DragStartBehavior.down,
         itemBuilder: (context, page) {
+          // print('---------- {widget.cell.uids[page]} : ${widget.cell.uids[page]}');
           var count = (page / 3).toStringAsFixed(1).split('.').last;
           Widget child = VividCard(
             _normalizedOffset,
+            uid: widget.cell.uids[page],
             axis: scrollDirection,
             shadowsIsOn: widget.isShadowsOn,
             path: paths[count],
@@ -112,6 +116,22 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
                         margin: EdgeInsets.symmetric(
                             horizontal: widget.cell.width * widget.cell.paddingRatioH,
                             vertical: widget.cell.height * widget.cell.paddingRatioV),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              WhitePageRoute(
+                                  enterPage: CardDetails(
+                                path: paths[count],
+                                uid: widget.cell.uids[page],
+                              )));
+
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          // builder: (context) => CardDetails(
+                          //       path: paths[count],
+                          //       uid: widget.cell.uids[page],
+                          //     ))
+                          // );
+                        },
                       ),
               ),
             ),

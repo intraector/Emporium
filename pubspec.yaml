@@ -28,6 +28,7 @@ dependencies:
   google_fonts: ^1.1.1
   mdi: ^4.0.0
   sailor: ^0.7.1
+  uuid: ^2.2.2
 
 dev_dependencies:
   flutter_test:

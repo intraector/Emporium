@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 class Settings {
   double parentOffset = 0;
@@ -149,10 +150,14 @@ class Cell {
     @required this.paddingRatioV,
     this.initialPage = 0,
     this.onUpdate,
-  }) : _heightRatio = heightRatio;
+  }) : _heightRatio = heightRatio {
+    var uuid = Uuid();
+    uids = List.generate(cardsQty, (index) => uuid.v4());
+  }
   void Function() onUpdate;
   double screenWidth;
   double widthRatio;
+
   double _heightRatio;
   double get heightRatio => _heightRatio;
   set heightRatio(double value) {
@@ -167,4 +172,5 @@ class Cell {
   double paddingRatioH;
   double paddingRatioV;
   int cardsQty = 8;
+  List<String> uids = [];
 }
