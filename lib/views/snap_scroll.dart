@@ -123,6 +123,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
                                   enterPage: CardDetails(
                                 path: paths[count],
                                 uid: widget.cell.uids[page],
+                                screenSize: MediaQuery.of(context).size,
                               )));
 
                           // Navigator.of(context).push(MaterialPageRoute(

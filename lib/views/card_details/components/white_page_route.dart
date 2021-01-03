@@ -15,7 +15,7 @@ class WhitePageRoute extends PageRouteBuilder {
               var fadeOut = Tween<double>(begin: 0, end: 1)
                   .animate(CurvedAnimation(curve: Interval(0, 0.5), parent: animation));
               return Stack(children: <Widget>[
-                FadeTransition(opacity: fadeOut, child: Container(color: Colors.grey)),
+                FadeTransition(opacity: fadeOut, child: Container(color: Colors.black)),
                 FadeTransition(opacity: fadeIn, child: child)
               ]);
             });
