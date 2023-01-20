@@ -1,23 +1,31 @@
-import 'package:emporium/_constants/settings.dart';
-import 'package:emporium/common_components/bottom_tab_bar_material.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class ViewSettings extends StatefulWidget {
+import '../_constants/settings.dart';
+import '../common_components/bottom_tab_bar_material.dart';
+
+class ScreenSettings extends StatefulWidget {
+  const ScreenSettings({super.key});
+
   @override
-  _ViewSettingsState createState() => _ViewSettingsState();
+  ScreenSettingsState createState() => ScreenSettingsState();
 }
 
-class _ViewSettingsState extends State<ViewSettings> {
-  var settings = GetIt.I<Settings>();
-  double rowWidth = 0.6;
-  double cardWidth = 0.6;
+class ScreenSettingsState extends State<ScreenSettings> {
   double cardHeight = 0.6;
+  double cardWidth = 0.6;
+  double rowWidth = 0.6;
+  var settings = GetIt.I<Settings>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings'), backgroundColor: Colors.brown),
-      bottomNavigationBar: BottomTabBarMaterial(index: 2),
+      appBar: AppBar(
+        title: const Text('Settings'),
+        backgroundColor: Colors.brown,
+        automaticallyImplyLeading: false,
+      ),
+      bottomNavigationBar: const BottomTabBarMaterial(index: 1),
       body: SafeArea(
           child: Column(
         children: [
@@ -28,7 +36,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Elastic', style: TextStyle(color: Colors.brown)),
+                  const Text('Elastic', style: TextStyle(color: Colors.brown)),
                   Switch(
                     onChanged: (isChecked) => setState(() => settings.isElasticOn = isChecked),
                     value: settings.isElasticOn,
@@ -38,7 +46,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Rotation', style: TextStyle(color: Colors.brown)),
+                  const Text('Rotation', style: TextStyle(color: Colors.brown)),
                   Switch(
                     onChanged: (isChecked) => setState(() => settings.isRotationOn = isChecked),
                     value: settings.isRotationOn,
@@ -48,7 +56,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Shadows', style: TextStyle(color: Colors.brown)),
+                  const Text('Shadows', style: TextStyle(color: Colors.brown)),
                   Switch(
                     onChanged: (isChecked) => setState(() => settings.isShadowsOn = isChecked),
                     value: settings.isShadowsOn,
@@ -56,7 +64,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                 ],
               ),
               // Divider(),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               // Card(
               // margin: EdgeInsets.all(8.0),
               // child: Column(
@@ -67,7 +75,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //           Flexible(
               //             child: Padding(
               //               padding: const EdgeInsets.all(8.0),
-              //               child: Text('Grid', style: TextStyle(color: Colors.brown)),
+              //               child:const Text('Grid', style: TextStyle(color: Colors.brown)),
               //             ),
               //           ),
               //         ],
@@ -76,7 +84,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //         children: [
               //           Padding(
               //             padding: const EdgeInsets.all(8.0),
-              //             child: Text('Rows: ${settings.rowsQty}',
+              //             child:const Text('Rows: ${settings.rowsQty}',
               //                 style: TextStyle(color: Colors.brown)),
               //           ),
               //           Expanded(
@@ -98,7 +106,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //         children: [
               //           Padding(
               //             padding: const EdgeInsets.all(8.0),
-              //             child: Text('Cards: ${settings.cardsQty}',
+              //             child:const Text('Cards: ${settings.cardsQty}',
               //                 style: TextStyle(color: Colors.brown)),
               //           ),
               //           Expanded(
@@ -119,7 +127,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //     ],
               //   ),
               // ),
-              // SizedBox(height: 20.0),
+              //const SizedBox(height: 20.0),
 
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +135,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //     Flexible(
               //       child: Padding(
               //         padding: const EdgeInsets.all(8.0),
-              //         child: Text('General', style: TextStyle(color: Colors.brown)),
+              //         child:const Text('General', style: TextStyle(color: Colors.brown)),
               //       ),
               //     ),
               //   ],
@@ -137,7 +145,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //   children: [
               //     Padding(
               //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Text('Cell Height', style: TextStyle(color: Colors.brown)),
+              //       child:const Text('Cell Height', style: TextStyle(color: Colors.brown)),
               //     ),
               //     Expanded(
               //       child: Slider(
@@ -158,7 +166,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //   children: [
               //     Padding(
               //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Text('H. padding', style: TextStyle(color: Colors.brown)),
+              //       child:const Text('H. padding', style: TextStyle(color: Colors.brown)),
               //     ),
               //     Expanded(
               //       child: Slider(
@@ -179,7 +187,7 @@ class _ViewSettingsState extends State<ViewSettings> {
               //   children: [
               //     Padding(
               //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Text('V. padding', style: TextStyle(color: Colors.brown)),
+              //       child:const Text('V. padding', style: TextStyle(color: Colors.brown)),
               //     ),
               //     Expanded(
               //       child: Slider(
@@ -199,7 +207,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Flexible(
                         child: Text('Effect', style: TextStyle(color: Colors.brown)),
                       )
@@ -211,8 +219,8 @@ class _ViewSettingsState extends State<ViewSettings> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8.0),
                               child: Text('None', style: TextStyle(color: Colors.brown)),
                             ),
                             Radio(
@@ -227,8 +235,8 @@ class _ViewSettingsState extends State<ViewSettings> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8.0),
                               child: Text('First', style: TextStyle(color: Colors.brown)),
                             ),
                             Radio(
@@ -245,7 +253,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Second', style: TextStyle(color: Colors.brown)),
+                              const Text('Second', style: TextStyle(color: Colors.brown)),
                               Radio(
                                 groupValue: true,
                                 onChanged: (isChecked) => setState(() => settings.effect = Effect.second),
@@ -259,8 +267,8 @@ class _ViewSettingsState extends State<ViewSettings> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8.0),
                               child: Text('Third', style: TextStyle(color: Colors.brown)),
                             ),
                             Radio(
@@ -275,8 +283,8 @@ class _ViewSettingsState extends State<ViewSettings> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8.0),
                               child: Text('Forth', style: TextStyle(color: Colors.brown)),
                             ),
                             Radio(
@@ -291,9 +299,9 @@ class _ViewSettingsState extends State<ViewSettings> {
                   ),
                 ],
               ),
-              Divider(),
-              SizedBox(height: 20.0),
-              GenerateRows(),
+              const Divider(),
+              const SizedBox(height: 20.0),
+              const GenerateRows(),
             ],
           ))
         ],
@@ -303,31 +311,26 @@ class _ViewSettingsState extends State<ViewSettings> {
 }
 
 class GenerateRows extends StatefulWidget {
+  const GenerateRows({super.key});
+
   @override
-  _GenerateRowsState createState() => _GenerateRowsState();
+  GenerateRowsState createState() => GenerateRowsState();
 }
 
-class _GenerateRowsState extends State<GenerateRows> {
+class GenerateRowsState extends State<GenerateRows> {
   var settings = GetIt.I<Settings>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: generate(),
-    );
-  }
 
   List<Widget> generate() {
     var output = <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Flexible(
             child: Text('Individual', style: TextStyle(color: Colors.brown)),
           ),
         ],
       ),
-      SizedBox(height: 20.0),
+      const SizedBox(height: 20.0),
     ];
     for (int index = 0; index < settings.cells.list.length; index++) {
       output.add(Card(
@@ -337,7 +340,7 @@ class _GenerateRowsState extends State<GenerateRows> {
               quarterTurns: 3,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Row ${index + 1}', style: TextStyle(color: Colors.brown)),
+                child: Text('Row ${index + 1}', style: const TextStyle(color: Colors.brown)),
               ),
             ),
             Expanded(
@@ -346,8 +349,8 @@ class _GenerateRowsState extends State<GenerateRows> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Text('Width', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
@@ -367,8 +370,8 @@ class _GenerateRowsState extends State<GenerateRows> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Text('Height', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
@@ -388,8 +391,8 @@ class _GenerateRowsState extends State<GenerateRows> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Text('Padding H.', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
@@ -409,8 +412,8 @@ class _GenerateRowsState extends State<GenerateRows> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Text('Padding V.', style: TextStyle(color: Colors.brown)),
                       ),
                       Expanded(
@@ -435,5 +438,12 @@ class _GenerateRowsState extends State<GenerateRows> {
       ));
     }
     return output;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: generate(),
+    );
   }
 }

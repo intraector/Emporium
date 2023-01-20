@@ -2,29 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
 
-class CardDetails extends StatefulWidget {
-  CardDetails({
+class DetailsScreen extends StatefulWidget {
+  const DetailsScreen({
+    super.key,
     required this.path,
     required this.uid,
     required this.screenSize,
   });
+
   final String path;
-  final String uid;
   final Size screenSize;
+  final String uid;
 
   @override
-  _CardDetailsState createState() => _CardDetailsState();
+  DetailsScreenState createState() => DetailsScreenState();
 }
 
-class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin {
+class DetailsScreenState extends State<DetailsScreen> with TickerProviderStateMixin {
+  var bodyColor = Colors.black;
+  var bodyTagsOpacity = 0.0;
+  var bodyTextOpacity = 0.0;
   // AnimationController animCtrlTitle;
   // Animation<Offset> animTitle;
   double titleOpacity = 0.0;
+
   late double topButtonsPosition;
-  var bodyColor = Colors.black;
-  var bodyTextOpacity = 0.0;
-  var bodyTagsOpacity = 0.0;
   var userTilePosition = -50.0;
+
+  @override
+  void dispose() {
+    // animCtrlTitle.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,25 +48,70 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
     // curve: Curves.linear,
     // ));
     // Future.delayed(Duration(milliseconds: 1700)).whenComplete(() => animCtrlTitle.forward());
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => Future.delayed(Duration(milliseconds: 1700)).whenComplete(() => setState(() {
-              topButtonsPosition = 0.0;
-              Future.delayed(Duration(milliseconds: 500)).whenComplete(() => setState(() {
-                    titleOpacity = 1.0;
-                  }));
-              Future.delayed(Duration(milliseconds: 800)).whenComplete(() => setState(() {
-                    bodyColor = Colors.white;
-                  }));
-              Future.delayed(Duration(milliseconds: 1100)).whenComplete(() => setState(() {
-                    bodyTextOpacity = 1.0;
-                  }));
-              Future.delayed(Duration(milliseconds: 1400)).whenComplete(() => setState(() {
-                    bodyTagsOpacity = 1.0;
-                  }));
-              Future.delayed(Duration(milliseconds: 1700)).whenComplete(() => setState(() {
-                    userTilePosition = 10.0;
-                  }));
-            })));
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => Future.delayed(const Duration(milliseconds: 1700)).whenComplete(
+        () => setState(
+          () {
+            topButtonsPosition = 0.0;
+            Future.delayed(const Duration(milliseconds: 500)).whenComplete(
+              () => setState(
+                () {
+                  titleOpacity = 1.0;
+                },
+              ),
+            );
+            Future.delayed(const Duration(milliseconds: 800)).whenComplete(
+              () => setState(
+                () {
+                  bodyColor = Colors.white;
+                },
+              ),
+            );
+            Future.delayed(const Duration(milliseconds: 1100)).whenComplete(
+              () => setState(
+                () {
+                  bodyTextOpacity = 1.0;
+                },
+              ),
+            );
+            Future.delayed(const Duration(milliseconds: 1400)).whenComplete(
+              () => setState(
+                () {
+                  bodyTagsOpacity = 1.0;
+                },
+              ),
+            );
+            Future.delayed(const Duration(milliseconds: 1700)).whenComplete(
+              () => setState(
+                () {
+                  userTilePosition = 10.0;
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFlightWidget(BuildContext flightContext, Animation<double> heroAnimation,
+      HeroFlightDirection flightDirection, BuildContext fromHeroContext, BuildContext toHeroContext) {
+    return AnimatedBuilder(
+      animation: heroAnimation,
+      builder: (context, child) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(25.0 - heroAnimation.value * 25.0),
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(widget.path),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -64,9 +119,12 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+        ),
         body: Column(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width,
               child: Stack(
@@ -74,7 +132,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                   Hero(
                     tag: widget.uid,
                     flightShuttleBuilder: _buildFlightWidget,
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.width,
                       child: Image.asset(
@@ -84,12 +142,12 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                     ),
                   ),
                   AnimatedPositioned(
-                    duration: Duration(milliseconds: 1000),
+                    duration: const Duration(milliseconds: 1000),
                     top: 0.0,
                     left: topButtonsPosition,
                     curve: Curves.bounceOut,
                     child: Container(
-                      margin: EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(10.0),
                       padding: EdgeInsets.all(widget.screenSize.width * 0.02),
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.45), borderRadius: BorderRadius.circular(25.0)),
@@ -100,35 +158,36 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                     ),
                   ),
                   AnimatedPositioned(
-                    duration: Duration(milliseconds: 1000),
+                    duration: const Duration(milliseconds: 1000),
                     top: 0.0,
                     right: topButtonsPosition,
                     curve: Curves.bounceOut,
                     child: Container(
-                        margin: EdgeInsets.all(10.0),
-                        padding: EdgeInsets.all(widget.screenSize.width * 0.02),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.45),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Mdi.dotsVertical,
-                          color: Colors.white,
-                        )),
+                      margin: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(widget.screenSize.width * 0.02),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.45),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Mdi.dotsVertical,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                   Positioned(
                     left: 0.0,
                     bottom: 0.0,
                     child: AnimatedOpacity(
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       opacity: titleOpacity,
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Row(
-                          children: [
+                          children: const [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(8.0),
                                 child: Text(
                                   'BIG TITLE',
                                   textAlign: TextAlign.center,
@@ -151,7 +210,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
             ),
             Expanded(
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 width: widget.screenSize.width,
                 color: bodyColor,
                 child: Stack(
@@ -159,10 +218,10 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                     ListView(
                       children: [
                         AnimatedOpacity(
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           opacity: bodyTextOpacity,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'Back in 1960 a man in England put a plant in a huge bottle. \nIn 1972 he watered it for the last time, but it keeps on thriving. The sealed bottle works like a mini ecosystem that recycles its nutrients and water.',
                               textAlign: TextAlign.justify,
@@ -171,7 +230,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                           ),
                         ),
                         AnimatedOpacity(
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           opacity: bodyTagsOpacity,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -203,7 +262,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                       ],
                     ),
                     AnimatedPositioned(
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       bottom: userTilePosition,
                       left: 0.0,
                       right: 0.0,
@@ -218,8 +277,8 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 16.0),
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 16.0),
                                     child: CircleAvatar(backgroundImage: AssetImage('assets/images/avatar.png')),
                                   ),
                                   Column(
@@ -253,31 +312,5 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
         ),
       ),
     );
-  }
-
-  Widget _buildFlightWidget(BuildContext flightContext, Animation<double> heroAnimation,
-      HeroFlightDirection flightDirection, BuildContext fromHeroContext, BuildContext toHeroContext) {
-    return AnimatedBuilder(
-      animation: heroAnimation,
-      builder: (context, child) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(25.0 - heroAnimation.value * 25.0),
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(widget.path),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    // animCtrlTitle.dispose();
-    super.dispose();
   }
 }

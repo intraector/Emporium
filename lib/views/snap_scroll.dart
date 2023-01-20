@@ -1,5 +1,5 @@
 import 'package:emporium/_constants/settings.dart';
-import 'package:emporium/views/card_details/card_details.dart';
+import 'package:emporium/views/card_details/details_screen.dart';
 import 'package:emporium/views/card_details/components/white_page_route.dart';
 import 'package:emporium/views/vivid_shadows/components/elastic_drag_alt.dart';
 import 'package:emporium/views/vivid_shadows/components/rotation_3d.dart';
@@ -33,10 +33,10 @@ class SnapScroll extends StatefulWidget {
   final double maxRotation;
 
   @override
-  _SnapScrollState createState() => _SnapScrollState();
+  SnapScrollState createState() => SnapScrollState();
 }
 
-class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateMixin {
+class SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateMixin {
   Axis scrollDirection = Axis.horizontal;
   ScrollController listContoller = ScrollController();
   double _normalizedOffset = 0;
@@ -99,29 +99,31 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
                 rotationY: scrollDirection == Axis.horizontal ? -_normalizedOffset * widget.maxRotation : 0,
                 child: widget.isShadowsOn
                     ? TappableEdgesWithShadows(
-                        child: child,
                         width: widget.cell.width,
                         height: widget.cell.height,
                         margin: EdgeInsets.symmetric(
                             horizontal: widget.cell.width * widget.cell.paddingRatioH,
                             vertical: widget.cell.height * widget.cell.paddingRatioV),
+                        child: child,
                       )
                     : TappableEdges(
-                        child: child,
                         width: widget.cell.width,
                         height: widget.cell.height,
                         margin: EdgeInsets.symmetric(
                             horizontal: widget.cell.width * widget.cell.paddingRatioH,
                             vertical: widget.cell.height * widget.cell.paddingRatioV),
+                        child: child,
                         onTap: () {
                           Navigator.push(
-                              context,
-                              WhitePageRoute(
-                                  enterPage: CardDetails(
+                            context,
+                            WhitePageRoute(
+                              enterPage: DetailsScreen(
                                 path: paths[count]!,
                                 uid: widget.cell.uids[page],
                                 screenSize: MediaQuery.of(context).size,
-                              )));
+                              ),
+                            ),
+                          );
 
                           // Navigator.of(context).push(MaterialPageRoute(
                           // builder: (context) => CardDetails(

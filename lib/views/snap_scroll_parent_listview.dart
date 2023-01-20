@@ -1,29 +1,34 @@
-import 'package:emporium/_constants/settings.dart';
-import 'package:emporium/views/snap_scroll.dart';
-import 'package:emporium/views/vivid_shadows/components/custom_page_view/custom_scroll_physics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../_constants/settings.dart';
+import 'snap_scroll.dart';
+import 'vivid_shadows/components/custom_page_view/custom_scroll_physics.dart';
+
 class SnapScrollParentListView extends StatefulWidget {
-  SnapScrollParentListView({
+  const SnapScrollParentListView({
+    super.key,
     required this.cells,
     this.isShadowsOn = true,
     this.isRotationOn = true,
     this.isElasticOn = true,
     this.initialScrollOffset = 0.0,
   });
-  final bool isShadowsOn;
-  final bool isRotationOn;
-  final bool isElasticOn;
+
   final Cells cells;
   final double initialScrollOffset;
+  final bool isElasticOn;
+  final bool isRotationOn;
+  final bool isShadowsOn;
+
   @override
-  _SnapScrollParentListViewState createState() => _SnapScrollParentListViewState();
+  SnapScrollParentListViewState createState() => SnapScrollParentListViewState();
 }
 
-class _SnapScrollParentListViewState extends State<SnapScrollParentListView> with SingleTickerProviderStateMixin {
-  var settings = GetIt.I<Settings>();
+class SnapScrollParentListViewState extends State<SnapScrollParentListView> with SingleTickerProviderStateMixin {
   late ScrollController controller;
+  var settings = GetIt.I<Settings>();
+
   // double itemExtent;
   @override
   void initState() {
@@ -37,7 +42,10 @@ class _SnapScrollParentListViewState extends State<SnapScrollParentListView> wit
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        physics: CustomScrollPhysics(cells: widget.cells, parent: BouncingScrollPhysics()),
+        physics: CustomScrollPhysics(
+          cells: widget.cells,
+          parent: const BouncingScrollPhysics(),
+        ),
         itemCount: widget.cells.list.length,
         controller: controller,
         scrollDirection: Axis.vertical,

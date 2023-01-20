@@ -1,35 +1,35 @@
 import 'package:emporium/home.dart';
-import 'package:emporium/views/view_settings.dart';
+import 'package:emporium/views/screen_settings.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabBarMaterial extends StatelessWidget {
-  BottomTabBarMaterial({required this.index});
+  const BottomTabBarMaterial({super.key, required this.index});
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    Widget _home;
-    Widget _settings;
-    final _inactiveColor = Theme.of(context).primaryColor;
-    final _disabledColor = Theme.of(context).backgroundColor;
-    final double _iconSize = 26;
+    Widget home;
+    Widget settings;
+    final inactiveColor = Theme.of(context).primaryColor;
+    final disabledColor = Theme.of(context).backgroundColor;
+    const double iconSize = 26;
 
     //----------------------------------------_home
-    _home = Column(
+    home = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: Icon(Icons.home),
-          iconSize: _iconSize,
-          disabledColor: _inactiveColor,
-          color: _disabledColor,
+          icon: const Icon(Icons.home),
+          iconSize: iconSize,
+          disabledColor: inactiveColor,
+          color: disabledColor,
           onPressed: index == 0
               ? null
               : () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ViewHome();
-                      },
+                    PageRouteBuilder(
+                      pageBuilder: (context, _, __) => ScreenHome(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
                     ),
                   ),
         ),
@@ -41,21 +41,21 @@ class BottomTabBarMaterial extends StatelessWidget {
     );
 
     //----------------------------------------_settings
-    _settings = Column(
+    settings = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: Icon(Icons.settings),
-          iconSize: _iconSize,
-          disabledColor: _inactiveColor,
-          color: _disabledColor,
+          icon: const Icon(Icons.settings),
+          iconSize: iconSize,
+          disabledColor: inactiveColor,
+          color: disabledColor,
           onPressed: index == 1
               ? null
               : () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ViewSettings();
-                      },
+                    PageRouteBuilder(
+                      pageBuilder: (context, _, __) => const ScreenSettings(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
                     ),
                   ),
         ),
@@ -66,13 +66,13 @@ class BottomTabBarMaterial extends StatelessWidget {
       ],
     );
 
-    var _list = [_home, _settings];
+    var list = [home, settings];
 
     return BottomAppBar(
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: _list,
+        children: list,
       ),
     );
   }

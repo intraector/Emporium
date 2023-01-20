@@ -6,10 +6,11 @@ import 'package:get_it/get_it.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   GetIt.I.registerSingleton<Settings>(Settings());
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ViewHome(),
+      home: ScreenHome(),
     );
   }
 }
