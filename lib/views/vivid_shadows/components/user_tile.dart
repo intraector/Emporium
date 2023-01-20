@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class UserTile extends StatelessWidget {
   UserTile({this.width, this.height});
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,13 +28,11 @@ class UserTile extends StatelessWidget {
               children: [
                 Text(
                   'TheOffWhiteDealer',
-                  style: GoogleFonts.roboto(
-                      color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w700),
+                  style: GoogleFonts.roboto(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w700),
                 ),
                 Text(
                   '32.4K Likes  3 min ago',
-                  style: GoogleFonts.roboto(
-                      color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.w400),
+                  style: GoogleFonts.roboto(color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.w400),
                 ),
               ],
             )

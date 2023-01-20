@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BodyText extends StatelessWidget {
-  BodyText({@required this.width, @required this.height});
+  BodyText({required this.width, required this.height});
   final double width;
   final double height;
   final double innerPadding = 20.0;
@@ -28,8 +28,7 @@ class BodyText extends StatelessWidget {
                       'Back in 1960 a man in England put a plant in a huge bottle. \nIn 1972 he watered it for the last time, but it keeps on thriving. The sealed bottle works like a mini ecosystem that recycles its nutrients and water.',
                       maxLines: 6,
                       textAlign: TextAlign.justify,
-                      style: GoogleFonts.roboto(
-                          color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w400),
+                      style: GoogleFonts.roboto(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w400),
                       // softWrap: false,
                       overflow: TextOverflow.fade,
                     ),
@@ -53,8 +52,7 @@ class BodyText extends StatelessWidget {
                         child: Text(
                       '#History #England #Nature #Content4app #Ecology #Men #Announcements',
                       maxLines: 3,
-                      style: GoogleFonts.roboto(
-                          color: Colors.white, fontSize: 17.0, fontWeight: FontWeight.w400),
+                      style: GoogleFonts.roboto(color: Colors.white, fontSize: 17.0, fontWeight: FontWeight.w400),
                       softWrap: true,
                       overflow: TextOverflow.fade,
                     ))

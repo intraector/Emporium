@@ -1,24 +1,24 @@
-import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 class Settings {
-  double parentOffset = 0;
-  bool isShadowsOn = false;
-  bool isRotationOn = true;
-  bool isElasticOn = true;
   double cellHeightRatio = 1.0;
-  Effect effect = Effect.none;
   var cells = Cells();
+  Effect effect = Effect.none;
+  bool isElasticOn = true;
+  bool isRotationOn = true;
+  bool isShadowsOn = false;
+  double parentOffset = 0;
 }
 
 enum Effect { first, second, third, forth, none }
 
 class Cells {
-  double screenWidth = 0.0;
-  List<Cell> list = [];
   var extents = <MapEntry<double, double>>[];
+  List<Cell> list = [];
+  double screenWidth = 0.0;
+
   double itemExtent(double offset) {
-    double output;
+    late double output;
     var sumOfExtents = 0.0;
     for (var cell in list) {
       sumOfExtents += cell.height;
@@ -31,7 +31,7 @@ class Cells {
   }
 
   MapEntry<double, double> getPage(double offset) {
-    MapEntry<double, double> output;
+    late MapEntry<double, double> output;
     for (var entry in extents) {
       if (offset >= entry.key && offset <= (entry.key + entry.value)) {
         output = entry;
@@ -143,34 +143,37 @@ class Cells {
 
 class Cell {
   Cell({
-    @required this.screenWidth,
-    @required this.widthRatio,
-    @required heightRatio,
-    @required this.paddingRatioH,
-    @required this.paddingRatioV,
+    required this.screenWidth,
+    required this.widthRatio,
+    required heightRatio,
+    required this.paddingRatioH,
+    required this.paddingRatioV,
     this.initialPage = 0,
     this.onUpdate,
   }) : _heightRatio = heightRatio {
     var uuid = Uuid();
     uids = List.generate(cardsQty, (index) => uuid.v4());
   }
-  void Function() onUpdate;
+
+  int cardsQty = 8;
+  int initialPage;
+  void Function()? onUpdate;
+  double paddingRatioH;
+  double paddingRatioV;
   double screenWidth;
+  List<String> uids = [];
   double widthRatio;
 
   double _heightRatio;
+
   double get heightRatio => _heightRatio;
+
   set heightRatio(double value) {
     _heightRatio = value;
-    onUpdate();
+    onUpdate?.call();
   }
 
-  int initialPage;
-
   double get width => screenWidth * widthRatio;
+
   double get height => width * heightRatio;
-  double paddingRatioH;
-  double paddingRatioV;
-  int cardsQty = 8;
-  List<String> uids = [];
 }

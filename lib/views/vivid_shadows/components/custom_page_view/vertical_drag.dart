@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/gestures.dart';
 
-double _globalDistanceMoved;
+late double _globalDistanceMoved;
 
 /// Recognizes movement in the vertical direction.
 ///
@@ -19,21 +19,20 @@ class VerticalDragGestureRecognizer extends DragGestureRecognizer {
   ///
   /// {@macro flutter.gestures.gestureRecognizer.kind}
   VerticalDragGestureRecognizer({
-    Object debugOwner,
-    PointerDeviceKind kind,
-  }) : super(debugOwner: debugOwner, kind: kind);
+    super.debugOwner,
+    required PointerDeviceKind kind,
+  }) : super(supportedDevices: <PointerDeviceKind>{kind});
 
   @override
   bool isFlingGesture(VelocityEstimate estimate, PointerDeviceKind kind) {
     final double minVelocity = minFlingVelocity ?? kMinFlingVelocity;
-    final double minDistance = minFlingDistance ?? computeHitSlop(kind);
-    return estimate.pixelsPerSecond.dy.abs() > minVelocity &&
-        estimate.offset.dy.abs() > minDistance;
+    final double minDistance = minFlingDistance ?? computeHitSlop(kind, null);
+    return estimate.pixelsPerSecond.dy.abs() > minVelocity && estimate.offset.dy.abs() > minDistance;
   }
 
   @override
   bool _hasSufficientGlobalDistanceToAccept(PointerDeviceKind pointerDeviceKind) {
-    return _globalDistanceMoved.abs() > computeHitSlop(pointerDeviceKind);
+    return _globalDistanceMoved.abs() > computeHitSlop(pointerDeviceKind, null);
   }
 
   @override
@@ -61,21 +60,20 @@ class HorizontalDragGestureRecognizer extends DragGestureRecognizer {
   ///
   /// {@macro flutter.gestures.gestureRecognizer.kind}
   HorizontalDragGestureRecognizer({
-    Object debugOwner,
-    PointerDeviceKind kind,
-  }) : super(debugOwner: debugOwner, kind: kind);
+    super.debugOwner,
+    required PointerDeviceKind kind,
+  }) : super(supportedDevices: <PointerDeviceKind>{kind});
 
   @override
   bool isFlingGesture(VelocityEstimate estimate, PointerDeviceKind kind) {
     final double minVelocity = minFlingVelocity ?? kMinFlingVelocity;
-    final double minDistance = minFlingDistance ?? computeHitSlop(kind);
-    return estimate.pixelsPerSecond.dx.abs() > minVelocity &&
-        estimate.offset.dx.abs() > minDistance;
+    final double minDistance = minFlingDistance ?? computeHitSlop(kind, null);
+    return estimate.pixelsPerSecond.dx.abs() > minVelocity && estimate.offset.dx.abs() > minDistance;
   }
 
   @override
   bool _hasSufficientGlobalDistanceToAccept(PointerDeviceKind pointerDeviceKind) {
-    return _globalDistanceMoved.abs() > computeHitSlop(pointerDeviceKind);
+    return _globalDistanceMoved.abs() > computeHitSlop(pointerDeviceKind, null);
   }
 
   @override
@@ -99,26 +97,26 @@ class HorizontalDragGestureRecognizer extends DragGestureRecognizer {
 ///    some time has passed.
 class PanGestureRecognizer extends DragGestureRecognizer {
   /// Create a gesture recognizer for tracking movement on a plane.
-  PanGestureRecognizer({Object debugOwner}) : super(debugOwner: debugOwner);
+  PanGestureRecognizer({super.debugOwner});
 
   @override
   bool isFlingGesture(VelocityEstimate estimate, PointerDeviceKind kind) {
     final double minVelocity = minFlingVelocity ?? kMinFlingVelocity;
-    final double minDistance = minFlingDistance ?? computeHitSlop(kind);
+    final double minDistance = minFlingDistance ?? computeHitSlop(kind, null);
     return estimate.pixelsPerSecond.distanceSquared > minVelocity * minVelocity &&
         estimate.offset.distanceSquared > minDistance * minDistance;
   }
 
   @override
   bool _hasSufficientGlobalDistanceToAccept(PointerDeviceKind pointerDeviceKind) {
-    return _globalDistanceMoved.abs() > computePanSlop(pointerDeviceKind);
+    return _globalDistanceMoved.abs() > computePanSlop(pointerDeviceKind, null);
   }
 
   @override
   Offset _getDeltaForDetails(Offset delta) => delta;
 
   @override
-  double _getPrimaryValueFromOffset(Offset value) => null;
+  double? _getPrimaryValueFromOffset(Offset value) => null;
 
   @override
   String get debugDescription => 'pan';

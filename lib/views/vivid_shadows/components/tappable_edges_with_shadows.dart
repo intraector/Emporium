@@ -1,31 +1,33 @@
-import 'package:Emporium/common_components/multi_gesture_detector.dart';
-import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
+import '../../../common_components/multi_gesture_detector.dart';
+import 'rotation_3d.dart';
+
 class TappableEdgesWithShadows extends StatefulWidget {
-  TappableEdgesWithShadows(
-      {@required this.child, @required this.width, @required this.height, margin})
-      : this.margin = margin ?? EdgeInsets.symmetric(horizontal: 20, vertical: 5.0);
+  TappableEdgesWithShadows({
+    required this.child,
+    required this.width,
+    required this.height,
+    margin,
+  }) : this.margin = margin ?? EdgeInsets.symmetric(horizontal: 20, vertical: 5.0);
+
   final Widget child;
-  final double width;
   final double height;
   final EdgeInsetsGeometry margin;
+  final double width;
 
   @override
   _TappableEdgesState createState() => _TappableEdgesState();
 }
 
 class _TappableEdgesState extends State<TappableEdgesWithShadows> with TickerProviderStateMixin {
+  late Animation<double> hAnimation;
+  late AnimationController hController;
   final initialOffset = Offset(3.0, 3.0);
-  final double xShift = 1.0;
+  late Animation<double> vAnimation;
+  late AnimationController vController;
   final double vShift = 1.0;
-
-  AnimationController hController;
-  Animation<double> hAnimation;
-
-  AnimationController vController;
-  Animation<double> vAnimation;
+  final double xShift = 1.0;
 
   @override
   void initState() {
@@ -89,19 +91,19 @@ class _TappableEdgesState extends State<TappableEdgesWithShadows> with TickerPro
                   // color: Colors.pink,
                   ),
               onDown: (event) {
-                final RenderBox referenceBox = context.findRenderObject();
-                var localPosition = referenceBox.globalToLocal(event.position);
+                final RenderBox? referenceBox = context.findRenderObject() as RenderBox?;
+                var localPosition = referenceBox?.globalToLocal(event.position);
 
-                if (localPosition.isInLeftArea(constraints: constraints)) {
+                if (localPosition?.isInLeftArea(constraints: constraints) ?? false) {
                   hController.animateTo(0.0);
                 }
-                if (localPosition.isInRightArea(constraints: constraints)) {
+                if (localPosition?.isInRightArea(constraints: constraints) ?? false) {
                   hController.animateTo(1.0);
                 }
-                if (localPosition.isInTopArea(constraints: constraints)) {
+                if (localPosition?.isInTopArea(constraints: constraints) ?? false) {
                   vController.animateTo(0.0);
                 }
-                if (localPosition.isInBottomArea(constraints: constraints)) {
+                if (localPosition?.isInBottomArea(constraints: constraints) ?? false) {
                   vController.animateTo(1.0);
                 }
               },
@@ -118,18 +120,19 @@ class _TappableEdgesState extends State<TappableEdgesWithShadows> with TickerPro
 }
 
 extension IsInLeftArea on Offset {
-  bool isInLeftArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
-    return (this.dx >= 0 &&
-        this.dx <= areaWidth &&
-        this.dy >= 0 &&
-        this.dy <= constraints.minHeight);
+  bool isInLeftArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
+    return (this.dx >= 0 && this.dx <= areaWidth && this.dy >= 0 && this.dy <= constraints.minHeight);
   }
 }
 
 extension IsInRightArea on Offset {
-  bool isInRightArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+  bool isInRightArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
     return (this.dx >= (constraints.minWidth - areaWidth) &&
         this.dx <= constraints.minWidth &&
         this.dy >= 0 &&
@@ -138,18 +141,19 @@ extension IsInRightArea on Offset {
 }
 
 extension IsInTopArea on Offset {
-  bool isInTopArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
-    return (this.dx >= 0 &&
-        this.dx <= constraints.minWidth &&
-        this.dy >= 0 &&
-        this.dy <= areaWidth);
+  bool isInTopArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
+    return (this.dx >= 0 && this.dx <= constraints.minWidth && this.dy >= 0 && this.dy <= areaWidth);
   }
 }
 
 extension IsInBottomArea on Offset {
-  bool isInBottomArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+  bool isInBottomArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
     return (this.dx >= 0 &&
         this.dx <= constraints.minWidth &&
         this.dy >= (constraints.minHeight - areaWidth) &&

@@ -1,58 +1,34 @@
-import 'package:Emporium/views/card_details/card_details.dart';
-import 'package:Emporium/views/vivid_shadows/components/background_picture.dart';
-import 'package:Emporium/views/vivid_shadows/components/body_text.dart';
-import 'package:Emporium/views/vivid_shadows/components/top_buttons.dart';
-import 'package:Emporium/views/vivid_shadows/components/top_buttons_with_shadows.dart';
-import 'package:Emporium/views/vivid_shadows/components/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class VividCard extends StatelessWidget {
-  final bool shadowsIsOn;
-  final double offsetRatio;
-  final double cardWidth;
-  final double cardHeight;
-  final String path;
-  final Axis axis;
-  final String uid;
+import 'components/background_picture.dart';
+import 'components/body_text.dart';
+import 'components/top_buttons.dart';
+import 'components/top_buttons_with_shadows.dart';
+import 'components/user_tile.dart';
 
+class VividCard extends StatelessWidget {
   const VividCard(
     this.offsetRatio, {
-    Key key,
-    @required this.cardWidth,
-    @required this.cardHeight,
-    @required this.path,
-    @required this.shadowsIsOn,
-    @required this.axis,
-    @required this.uid,
+    super.key,
+    required this.cardWidth,
+    required this.cardHeight,
+    required this.path,
+    required this.shadowsIsOn,
+    required this.axis,
+    required this.uid,
   })  : maxOffsetVertical = cardWidth * 0.06,
-        maxOffsetHorizontal = cardHeight * 0.06,
-        super(key: key);
+        maxOffsetHorizontal = cardHeight * 0.06;
 
-  final double maxOffsetVertical;
+  final Axis axis;
+  final double cardHeight;
+  final double cardWidth;
   final double maxOffsetHorizontal;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.pink.withOpacity(0.5),
-
-      width: cardWidth,
-      height: cardHeight,
-      // margin: EdgeInsets.only(top: 8),
-      child: Stack(
-        // overflow: Overflow.visible,
-        alignment: Alignment.center,
-        children: <Widget>[
-          Hero(
-            tag: uid,
-            child: BackgroundPicture(path: path),
-          ),
-          _buildCityImage(),
-          // City information
-        ],
-      ),
-    );
-  }
+  final double maxOffsetVertical;
+  final double offsetRatio;
+  final String path;
+  final bool shadowsIsOn;
+  final String uid;
 
   Widget _buildCityImage() {
     double topButtonsVerticalMargin = maxOffsetVertical + 10.0;
@@ -82,8 +58,8 @@ class VividCard extends StatelessWidget {
       height: cardHeight,
       width: cardWidth,
       child: Stack(
+        clipBehavior: Clip.none,
         alignment: Alignment.center,
-        overflow: Overflow.visible,
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
@@ -91,9 +67,7 @@ class VividCard extends StatelessWidget {
               left: leftMargin,
               right: rightMargin,
             ),
-            child: shadowsIsOn
-                ? TopButtonsWithShadows(width: cardWidth)
-                : TopButtons(width: cardWidth),
+            child: shadowsIsOn ? TopButtonsWithShadows(width: cardWidth) : TopButtons(width: cardWidth),
           ),
           Positioned(
             // left: leftMargin,
@@ -113,6 +87,29 @@ class VividCard extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(leftMargin, 0.0, rightMargin, userTileVerticalMargin),
             child: UserTile(width: cardWidth, height: cardHeight),
           ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // color: Colors.pink.withOpacity(0.5),
+
+      width: cardWidth,
+      height: cardHeight,
+      // margin: EdgeInsets.only(top: 8),
+      child: Stack(
+        // overflow: Overflow.visible,
+        alignment: Alignment.center,
+        children: <Widget>[
+          Hero(
+            tag: uid,
+            child: BackgroundPicture(path: path),
+          ),
+          _buildCityImage(),
+          // City information
         ],
       ),
     );

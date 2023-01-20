@@ -1,4 +1,3 @@
-import 'package:Emporium/_constants/routes.dart';
 import 'package:Emporium/_constants/settings.dart';
 import 'package:Emporium/common_components/bottom_tab_bar_material.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ class _ViewSettingsState extends State<ViewSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Settings'), backgroundColor: Colors.brown),
-      bottomNavigationBar: BottomTabBarMaterial(Paths.settings),
+      bottomNavigationBar: BottomTabBarMaterial(index: 2),
       body: SafeArea(
           child: Column(
         children: [
@@ -218,8 +217,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                             ),
                             Radio(
                               groupValue: true,
-                              onChanged: (isChecked) =>
-                                  setState(() => settings.effect = Effect.none),
+                              onChanged: (isChecked) => setState(() => settings.effect = Effect.none),
                               value: settings.effect == Effect.none,
                             ),
                           ],
@@ -235,8 +233,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                             ),
                             Radio(
                               groupValue: true,
-                              onChanged: (isChecked) =>
-                                  setState(() => settings.effect = Effect.first),
+                              onChanged: (isChecked) => setState(() => settings.effect = Effect.first),
                               value: settings.effect == Effect.first,
                             ),
                           ],
@@ -251,8 +248,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                               Text('Second', style: TextStyle(color: Colors.brown)),
                               Radio(
                                 groupValue: true,
-                                onChanged: (isChecked) =>
-                                    setState(() => settings.effect = Effect.second),
+                                onChanged: (isChecked) => setState(() => settings.effect = Effect.second),
                                 value: settings.effect == Effect.second,
                               ),
                             ],
@@ -269,8 +265,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                             ),
                             Radio(
                               groupValue: true,
-                              onChanged: (isChecked) =>
-                                  setState(() => settings.effect = Effect.third),
+                              onChanged: (isChecked) => setState(() => settings.effect = Effect.third),
                               value: settings.effect == Effect.third,
                             ),
                           ],
@@ -286,8 +281,7 @@ class _ViewSettingsState extends State<ViewSettings> {
                             ),
                             Radio(
                               groupValue: true,
-                              onChanged: (isChecked) =>
-                                  setState(() => settings.effect = Effect.forth),
+                              onChanged: (isChecked) => setState(() => settings.effect = Effect.forth),
                               value: settings.effect == Effect.forth,
                             ),
                           ],
@@ -358,16 +352,13 @@ class _GenerateRowsState extends State<GenerateRows> {
                       ),
                       Expanded(
                         child: Slider(
-                          label: (double.parse((settings.cells.list[index].widthRatio)
-                                          .toStringAsPrecision(2)) *
-                                      100)
+                          label: (double.parse((settings.cells.list[index].widthRatio).toStringAsPrecision(2)) * 100)
                                   .toStringAsFixed(0) +
                               '% of screen\'s width',
                           min: 0.4,
                           max: 1.0,
                           divisions: 6,
-                          onChanged: (value) =>
-                              setState(() => settings.cells.list[index].widthRatio = value),
+                          onChanged: (value) => setState(() => settings.cells.list[index].widthRatio = value),
                           value: settings.cells.list[index].widthRatio,
                         ),
                       ),
@@ -382,16 +373,13 @@ class _GenerateRowsState extends State<GenerateRows> {
                       ),
                       Expanded(
                         child: Slider(
-                          label: (double.parse(settings.cells.list[index].heightRatio
-                                          .toStringAsPrecision(2)) *
-                                      100)
+                          label: (double.parse(settings.cells.list[index].heightRatio.toStringAsPrecision(2)) * 100)
                                   .toStringAsFixed(0) +
                               '% of card\'s width',
                           min: 0.2,
                           max: 2.0,
                           divisions: 18,
-                          onChanged: (value) =>
-                              setState(() => settings.cells.list[index].heightRatio = value),
+                          onChanged: (value) => setState(() => settings.cells.list[index].heightRatio = value),
                           value: settings.cells.list[index].heightRatio,
                         ),
                       ),
@@ -406,16 +394,13 @@ class _GenerateRowsState extends State<GenerateRows> {
                       ),
                       Expanded(
                         child: Slider(
-                          label: (double.parse(settings.cells.list[index].paddingRatioH
-                                          .toStringAsPrecision(2)) *
-                                      100)
+                          label: (double.parse(settings.cells.list[index].paddingRatioH.toStringAsPrecision(2)) * 100)
                                   .toStringAsFixed(0) +
                               '% of card\'s width',
                           min: 0.01,
                           max: 0.1,
                           divisions: 9,
-                          onChanged: (value) =>
-                              setState(() => settings.cells.list[index].paddingRatioH = value),
+                          onChanged: (value) => setState(() => settings.cells.list[index].paddingRatioH = value),
                           value: settings.cells.list[index].paddingRatioH,
                         ),
                       ),
@@ -430,16 +415,13 @@ class _GenerateRowsState extends State<GenerateRows> {
                       ),
                       Expanded(
                         child: Slider(
-                          label: (double.parse(settings.cells.list[index].paddingRatioV
-                                          .toStringAsPrecision(3)) *
-                                      100)
+                          label: (double.parse(settings.cells.list[index].paddingRatioV.toStringAsPrecision(3)) * 100)
                                   .toStringAsFixed(1) +
                               '% of card\'s width',
                           min: 0.005,
                           max: 0.05,
                           divisions: 9,
-                          onChanged: (value) =>
-                              setState(() => settings.cells.list[index].paddingRatioV = value),
+                          onChanged: (value) => setState(() => settings.cells.list[index].paddingRatioV = value),
                           value: settings.cells.list[index].paddingRatioV,
                         ),
                       ),

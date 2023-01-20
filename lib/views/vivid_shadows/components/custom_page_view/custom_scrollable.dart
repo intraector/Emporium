@@ -6,16 +6,12 @@
 
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui';
 
 // import 'package:flutter/gestures.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'vertical_drag.dart' as vd;
 
 export 'package:flutter/physics.dart' show Tolerance;
 
@@ -276,9 +272,8 @@ class CustomScrollable extends StatefulWidget {
   /// If there is no [CustomScrollable] in the widget tree above the [context], this
   /// method returns false.
   static bool recommendDeferredLoadingForContext(BuildContext context) {
-    final _ScrollableScope widget = context
-        .getElementForInheritedWidgetOfExactType<_ScrollableScope>()
-        ?.widget as _ScrollableScope;
+    final _ScrollableScope widget =
+        context.getElementForInheritedWidgetOfExactType<_ScrollableScope>()?.widget as _ScrollableScope;
     if (widget == null) {
       return false;
     }
@@ -449,19 +444,16 @@ class CustomScrollableState extends State<CustomScrollable>
   @override
   @protected
   void setSemanticsActions(Set<SemanticsAction> actions) {
-    if (_gestureDetectorKey.currentState != null)
-      _gestureDetectorKey.currentState.replaceSemanticsActions(actions);
+    if (_gestureDetectorKey.currentState != null) _gestureDetectorKey.currentState.replaceSemanticsActions(actions);
   }
 
   // GESTURE RECOGNITION AND POINTER IGNORING
 
-  final GlobalKey<RawGestureDetectorState> _gestureDetectorKey =
-      GlobalKey<RawGestureDetectorState>();
+  final GlobalKey<RawGestureDetectorState> _gestureDetectorKey = GlobalKey<RawGestureDetectorState>();
   final GlobalKey _ignorePointerKey = GlobalKey();
 
   // This field is set during layout, and then reused until the next time it is set.
-  Map<Type, GestureRecognizerFactory> _gestureRecognizers =
-      const <Type, GestureRecognizerFactory>{};
+  Map<Type, GestureRecognizerFactory> _gestureRecognizers = const <Type, GestureRecognizerFactory>{};
   bool _shouldIgnorePointer = false;
 
   bool _lastCanDrag;
@@ -497,8 +489,7 @@ class CustomScrollableState extends State<CustomScrollable>
           break;
         case Axis.horizontal:
           _gestureRecognizers = <Type, GestureRecognizerFactory>{
-            HorizontalDragGestureRecognizer:
-                GestureRecognizerFactoryWithHandlers<HorizontalDragGestureRecognizer>(
+            HorizontalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<HorizontalDragGestureRecognizer>(
               () => HorizontalDragGestureRecognizer(),
               (HorizontalDragGestureRecognizer instance) {
                 instance
@@ -533,8 +524,7 @@ class CustomScrollableState extends State<CustomScrollable>
     if (_shouldIgnorePointer == value) return;
     _shouldIgnorePointer = value;
     if (_ignorePointerKey.currentContext != null) {
-      final RenderIgnorePointer renderBox =
-          _ignorePointerKey.currentContext.findRenderObject() as RenderIgnorePointer;
+      final RenderIgnorePointer renderBox = _ignorePointerKey.currentContext.findRenderObject() as RenderIgnorePointer;
       renderBox.ignoring = _shouldIgnorePointer;
     }
   }
@@ -610,8 +600,7 @@ class CustomScrollableState extends State<CustomScrollable>
       delta *= -1;
     }
 
-    return math.min(
-        math.max(position.pixels + delta, position.minScrollExtent), position.maxScrollExtent);
+    return math.min(math.max(position.pixels + delta, position.minScrollExtent), position.maxScrollExtent);
   }
 
   void _receivedPointerSignal(PointerSignalEvent event) {
@@ -629,8 +618,7 @@ class CustomScrollableState extends State<CustomScrollable>
     if (_physics != null && !_physics.shouldAcceptUserOffset(position)) {
       return;
     }
-    final double targetScrollOffset =
-        _targetScrollOffsetForPointerScroll(event as PointerScrollEvent);
+    final double targetScrollOffset = _targetScrollOffsetForPointerScroll(event as PointerScrollEvent);
     if (targetScrollOffset != position.pixels) {
       position.jumpTo(targetScrollOffset);
     }
@@ -804,8 +792,7 @@ class _RenderScrollSemantics extends RenderProxyBox {
   SemanticsNode _innerNode;
 
   @override
-  void assembleSemanticsNode(
-      SemanticsNode node, SemanticsConfiguration config, Iterable<SemanticsNode> children) {
+  void assembleSemanticsNode(SemanticsNode node, SemanticsConfiguration config, Iterable<SemanticsNode> children) {
     if (children.isEmpty || !children.first.isTagged(RenderViewport.useTwoPaneSemantics)) {
       super.assembleSemanticsNode(node, config, children);
       return;
@@ -948,8 +935,7 @@ class ScrollAction extends Action<ScrollIntent> {
   // metrics (pixels, viewportDimension, maxScrollExtent, minScrollExtent) are
   // null. The type and state arguments must not be null, and the widget must
   // have already been laid out so that the position fields are valid.
-  double _calculateScrollIncrement(CustomScrollableState state,
-      {ScrollIncrementType type = ScrollIncrementType.line}) {
+  double _calculateScrollIncrement(CustomScrollableState state, {ScrollIncrementType type = ScrollIncrementType.line}) {
     assert(type != null);
     assert(state.position != null);
     assert(state.position.pixels != null);
@@ -1039,8 +1025,7 @@ class ScrollAction extends Action<ScrollIntent> {
   void invoke(ScrollIntent intent) {
     final CustomScrollableState state = CustomScrollable.of(primaryFocus.context);
     assert(state != null, '$ScrollAction was invoked on a context that has no scrollable parent');
-    assert(state.position.pixels != null,
-        'Scrollable must be laid out before it can be scrolled via a ScrollAction');
+    assert(state.position.pixels != null, 'Scrollable must be laid out before it can be scrolled via a ScrollAction');
     assert(state.position.viewportDimension != null);
     assert(state.position.maxScrollExtent != null);
     assert(state.position.minScrollExtent != null);

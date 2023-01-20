@@ -9,7 +9,6 @@ import 'dart:math' as math;
 
 // import 'package:Emporium/views/vivid_shadows/components/custom_page_view/custom_scrollable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/foundation.dart' show precisionErrorTolerance;

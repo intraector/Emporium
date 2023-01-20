@@ -5,10 +5,10 @@ import 'dart:math' as math;
 class ClampingPhysics extends ScrollPhysics {
   /// Creates scroll physics that prevent the scroll offset from exceeding the
   /// bounds of the content..
-  const ClampingPhysics({ScrollPhysics parent}) : super(parent: parent);
+  const ClampingPhysics({super.parent});
 
   @override
-  ClampingPhysics applyTo(ScrollPhysics ancestor) {
+  ClampingPhysics applyTo(ScrollPhysics? ancestor) {
     return ClampingPhysics(parent: buildParent(ancestor));
   }
 
@@ -18,8 +18,7 @@ class ClampingPhysics extends ScrollPhysics {
       if (value == position.pixels) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary('$runtimeType.applyBoundaryConditions() was called redundantly.'),
-          ErrorDescription(
-              'The proposed new position, $value, is exactly equal to the current position of the '
+          ErrorDescription('The proposed new position, $value, is exactly equal to the current position of the '
               'given ${position.runtimeType}, ${position.pixels}.\n'
               'The applyBoundaryConditions method should only be called when the value is '
               'going to actually change the pixels, otherwise it is redundant.'),
@@ -35,24 +34,21 @@ class ClampingPhysics extends ScrollPhysics {
       return value - position.pixels;
     if (position.maxScrollExtent <= position.pixels && position.pixels < value) // overscroll
       return value - position.pixels;
-    if (value < position.minScrollExtent &&
-        position.minScrollExtent < position.pixels) // hit top edge
+    if (value < position.minScrollExtent && position.minScrollExtent < position.pixels) // hit top edge
       return value - position.minScrollExtent;
-    if (position.pixels < position.maxScrollExtent &&
-        position.maxScrollExtent < value) // hit bottom edge
+    if (position.pixels < position.maxScrollExtent && position.maxScrollExtent < value) // hit bottom edge
       return value - position.maxScrollExtent;
     return 0.0;
   }
 
   @override
-  Simulation createBallisticSimulation(ScrollMetrics position, double velocity) {
+  Simulation? createBallisticSimulation(ScrollMetrics position, double velocity) {
     velocity = velocity * 100000;
     final Tolerance tolerance = this.tolerance;
     if (position.outOfRange) {
-      double end;
+      late double end;
       if (position.pixels > position.maxScrollExtent) end = position.maxScrollExtent;
       if (position.pixels < position.minScrollExtent) end = position.minScrollExtent;
-      assert(end != null);
       return ScrollSpringSimulation(
         spring,
         position.pixels,

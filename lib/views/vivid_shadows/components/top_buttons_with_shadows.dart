@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
 
 class TopButtonsWithShadows extends StatelessWidget {
-  TopButtonsWithShadows({@required this.width});
+  TopButtonsWithShadows({required this.width});
   final double width;
 
   @override
@@ -23,13 +22,11 @@ class TopButtonsWithShadows extends StatelessWidget {
               ),
               child: Container(
                 padding: EdgeInsets.all(width * 0.015),
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.45),
-                    borderRadius: BorderRadius.circular(25.0)),
+                decoration:
+                    BoxDecoration(color: Colors.black.withOpacity(0.45), borderRadius: BorderRadius.circular(25.0)),
                 child: Text(
                   'Nature',
-                  style: GoogleFonts.roboto(
-                      color: Colors.grey[200], fontSize: 18.0, fontWeight: FontWeight.w400),
+                  style: GoogleFonts.roboto(color: Colors.grey[200], fontSize: 18.0, fontWeight: FontWeight.w400),
                 ),
               ),
             ),

@@ -4,17 +4,17 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class TappableEdges extends StatefulWidget {
   TappableEdges({
-    @required this.child,
-    @required this.width,
-    @required this.height,
-    @required this.margin,
+    required this.child,
+    required this.width,
+    required this.height,
+    required this.margin,
     this.onTap,
   });
   final Widget child;
   final double width;
   final double height;
   final EdgeInsetsGeometry margin;
-  final Function() onTap;
+  final Function()? onTap;
 
   @override
   _TappableEdgesState createState() => _TappableEdgesState();
@@ -25,11 +25,11 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
   final double xShift = 1.0;
   final double vShift = 1.0;
 
-  AnimationController hController;
-  Animation<double> hAnimation;
+  late AnimationController hController;
+  late Animation<double> hAnimation;
 
-  AnimationController vController;
-  Animation<double> vAnimation;
+  late AnimationController vController;
+  late Animation<double> vAnimation;
 
   bool hasMoved = false;
 
@@ -85,23 +85,23 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
                 // print('---------- onMove has moved: $hasMoved | event.distance: ${event.delta.distance}');
               },
               onDown: (event) {
-                final RenderBox referenceBox = context.findRenderObject();
-                var localPosition = referenceBox.globalToLocal(event.position);
+                final RenderBox? referenceBox = context.findRenderObject() as RenderBox?;
+                var localPosition = referenceBox?.globalToLocal(event.position);
                 bool isOnEdge = false;
 
-                if (localPosition.isInLeftArea(constraints: constraints)) {
+                if (localPosition?.isInLeftArea(constraints: constraints) ?? false) {
                   isOnEdge = true;
                   hController.animateTo(0.0);
                 }
-                if (localPosition.isInRightArea(constraints: constraints)) {
+                if (localPosition?.isInRightArea(constraints: constraints) ?? false) {
                   isOnEdge = true;
                   hController.animateTo(1.0);
                 }
-                if (localPosition.isInTopArea(constraints: constraints)) {
+                if (localPosition?.isInTopArea(constraints: constraints) ?? false) {
                   isOnEdge = true;
                   vController.animateTo(0.0);
                 }
-                if (localPosition.isInBottomArea(constraints: constraints)) {
+                if (localPosition?.isInBottomArea(constraints: constraints) ?? false) {
                   isOnEdge = true;
                   vController.animateTo(1.0);
                 }
@@ -116,7 +116,7 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
                 print('---------- onUp has moved: $hasMoved');
                 hController.animateTo(0.5);
                 vController.animateTo(0.5);
-                if (!hasMoved) widget.onTap();
+                if (!hasMoved) widget.onTap?.call();
                 hasMoved = false;
               },
             );
@@ -135,18 +135,19 @@ class _TappableEdgesState extends State<TappableEdges> with TickerProviderStateM
 }
 
 extension IsInLeftArea on Offset {
-  bool isInLeftArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
-    return (this.dx >= 0 &&
-        this.dx <= areaWidth &&
-        this.dy >= 0 &&
-        this.dy <= constraints.minHeight);
+  bool isInLeftArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
+    return (this.dx >= 0 && this.dx <= areaWidth && this.dy >= 0 && this.dy <= constraints.minHeight);
   }
 }
 
 extension IsInRightArea on Offset {
-  bool isInRightArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+  bool isInRightArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
     return (this.dx >= (constraints.minWidth - areaWidth) &&
         this.dx <= constraints.minWidth &&
         this.dy >= 0 &&
@@ -155,18 +156,19 @@ extension IsInRightArea on Offset {
 }
 
 extension IsInTopArea on Offset {
-  bool isInTopArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
-    return (this.dx >= 0 &&
-        this.dx <= constraints.minWidth &&
-        this.dy >= 0 &&
-        this.dy <= areaWidth);
+  bool isInTopArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
+    return (this.dx >= 0 && this.dx <= constraints.minWidth && this.dy >= 0 && this.dy <= areaWidth);
   }
 }
 
 extension IsInBottomArea on Offset {
-  bool isInBottomArea(
-      {@required BoxConstraints constraints, double areaWidth = kMinInteractiveDimension}) {
+  bool isInBottomArea({
+    required BoxConstraints constraints,
+    double areaWidth = kMinInteractiveDimension,
+  }) {
     return (this.dx >= 0 &&
         this.dx <= constraints.minWidth &&
         this.dy >= (constraints.minHeight - areaWidth) &&

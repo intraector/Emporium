@@ -1,10 +1,10 @@
-import 'package:Emporium/_constants/routes.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:Emporium/home.dart';
+import 'package:Emporium/views/view_settings.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabBarMaterial extends StatelessWidget {
-  BottomTabBarMaterial(this._path);
-  final String _path;
+  BottomTabBarMaterial({required this.index});
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,15 @@ class BottomTabBarMaterial extends StatelessWidget {
           iconSize: _iconSize,
           disabledColor: _inactiveColor,
           color: _disabledColor,
-          onPressed: _path == Paths.home ? null : () => Routes.sailor.navigate(Paths.home),
+          onPressed: index == 0
+              ? null
+              : () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ViewHome();
+                      },
+                    ),
+                  ),
         ),
         // Text(
         //   'Main',
@@ -41,7 +49,15 @@ class BottomTabBarMaterial extends StatelessWidget {
           iconSize: _iconSize,
           disabledColor: _inactiveColor,
           color: _disabledColor,
-          onPressed: _path == Paths.settings ? null : () => Routes.sailor.navigate(Paths.settings),
+          onPressed: index == 1
+              ? null
+              : () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ViewSettings();
+                      },
+                    ),
+                  ),
         ),
         // Text(
         //   'Settings',

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class ElasticDragAlt extends StatelessWidget {
   ElasticDragAlt({
-    @required this.offset,
-    @required this.child,
+    required this.offset,
+    required this.child,
     this.isOn = true,
-    @required this.distance,
+    required this.distance,
     this.axis = Axis.vertical,
-    @required this.width,
-    @required this.height,
+    required this.width,
+    required this.height,
   });
 
   final double offset;
@@ -47,7 +47,7 @@ class ElasticDragAlt extends StatelessWidget {
       width: width,
       height: height,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         children: [
           Positioned(
             top: 0,

@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Item extends StatefulWidget {
-  Item({@required this.width, @required this.path});
+  Item({required this.width, required this.path});
   final double width;
   final String path;
   @override
@@ -10,16 +10,16 @@ class Item extends StatefulWidget {
 }
 
 class _ItemState extends State<Item> with TickerProviderStateMixin {
-  double maxHeight;
+  late double maxHeight;
   double initialPadding = 20;
-  double innerPadding;
+  late double innerPadding;
   bool isUnfolded = false;
 
-  AnimationController _controllerMain;
-  AnimationController _controllerSecond;
+  late AnimationController _controllerMain;
+  late AnimationController _controllerSecond;
 
-  CurvedAnimation _animationMain;
-  CurvedAnimation _animationSecondary;
+  late CurvedAnimation _animationMain;
+  late CurvedAnimation _animationSecondary;
 
   @override
   void initState() {
@@ -52,8 +52,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
         animation: _animationMain,
         builder: (context, child) {
           return Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: initialPadding * _animationMain.value + (initialPadding * 0.5)),
+            margin: EdgeInsets.symmetric(horizontal: initialPadding * _animationMain.value + (initialPadding * 0.5)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Container(
@@ -97,8 +96,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                           ),
                                           Divider(height: innerPadding),
                                           Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: innerPadding, vertical: 5.0),
+                                            padding: EdgeInsets.symmetric(horizontal: innerPadding, vertical: 5.0),
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
@@ -112,8 +110,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: innerPadding, vertical: 20.0),
+                                            padding: EdgeInsets.symmetric(horizontal: innerPadding, vertical: 20.0),
                                             child: SingleChildScrollView(
                                               scrollDirection: Axis.horizontal,
                                               child: Row(
@@ -123,8 +120,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                                   Padding(
                                                     padding: const EdgeInsets.all(8.0),
                                                     child: CircleAvatar(
-                                                      backgroundImage:
-                                                          AssetImage('assets/images/avatar.png'),
+                                                      backgroundImage: AssetImage('assets/images/avatar.png'),
                                                     ),
                                                   ),
                                                   Padding(
@@ -134,9 +130,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                                       children: [
                                                         Text(
                                                           'TheOffWhiteDealer',
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold,
-                                                              fontSize: 18.0),
+                                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                                                         ),
                                                         Text(
                                                           '32.4K Likes  3 min ago',
@@ -192,9 +186,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   }
 
   double calcHeight() {
-    return maxHeight +
-        (maxHeight * 0.9 * _animationSecondary.value) -
-        (maxHeight * 0.16 * _animationMain.value);
+    return maxHeight + (maxHeight * 0.9 * _animationSecondary.value) - (maxHeight * 0.16 * _animationMain.value);
   }
 
   @override

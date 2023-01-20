@@ -6,10 +6,10 @@ import 'package:get_it/get_it.dart';
 
 class SnapScrollParentListView extends StatefulWidget {
   SnapScrollParentListView({
-    @required this.cells,
-    this.isShadowsOn,
-    this.isRotationOn,
-    this.isElasticOn,
+    required this.cells,
+    this.isShadowsOn = true,
+    this.isRotationOn = true,
+    this.isElasticOn = true,
     this.initialScrollOffset = 0.0,
   });
   final bool isShadowsOn;
@@ -21,11 +21,10 @@ class SnapScrollParentListView extends StatefulWidget {
   _SnapScrollParentListViewState createState() => _SnapScrollParentListViewState();
 }
 
-class _SnapScrollParentListViewState extends State<SnapScrollParentListView>
-    with SingleTickerProviderStateMixin {
+class _SnapScrollParentListViewState extends State<SnapScrollParentListView> with SingleTickerProviderStateMixin {
   var settings = GetIt.I<Settings>();
-  ScrollController controller;
-  double itemExtent;
+  late ScrollController controller;
+  // double itemExtent;
   @override
   void initState() {
     controller = ScrollController(initialScrollOffset: widget.initialScrollOffset);

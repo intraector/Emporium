@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BackgroundPicture extends StatelessWidget {
-  BackgroundPicture({@required this.path});
+  BackgroundPicture({required this.path});
   final String path;
 
   @override

@@ -3,7 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
 
 class CardDetails extends StatefulWidget {
-  CardDetails({@required this.path, @required this.uid, @required this.screenSize});
+  CardDetails({
+    required this.path,
+    required this.uid,
+    required this.screenSize,
+  });
   final String path;
   final String uid;
   final Size screenSize;
@@ -16,7 +20,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
   // AnimationController animCtrlTitle;
   // Animation<Offset> animTitle;
   double titleOpacity = 0.0;
-  double topButtonsPosition;
+  late double topButtonsPosition;
   var bodyColor = Colors.black;
   var bodyTextOpacity = 0.0;
   var bodyTagsOpacity = 0.0;
@@ -34,8 +38,8 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
     // curve: Curves.linear,
     // ));
     // Future.delayed(Duration(milliseconds: 1700)).whenComplete(() => animCtrlTitle.forward());
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => Future.delayed(Duration(milliseconds: 1700)).whenComplete(() => setState(() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => Future.delayed(Duration(milliseconds: 1700)).whenComplete(() => setState(() {
               topButtonsPosition = 0.0;
               Future.delayed(Duration(milliseconds: 500)).whenComplete(() => setState(() {
                     titleOpacity = 1.0;
@@ -88,12 +92,10 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                       margin: EdgeInsets.all(10.0),
                       padding: EdgeInsets.all(widget.screenSize.width * 0.02),
                       decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.45),
-                          borderRadius: BorderRadius.circular(25.0)),
+                          color: Colors.black.withOpacity(0.45), borderRadius: BorderRadius.circular(25.0)),
                       child: Text(
                         'Nature',
-                        style: GoogleFonts.roboto(
-                            color: Colors.grey[200], fontSize: 18.0, fontWeight: FontWeight.w400),
+                        style: GoogleFonts.roboto(color: Colors.grey[200], fontSize: 18.0, fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
@@ -188,9 +190,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                                       '#History #England #Nature #Content4app #Ecology #Men #Announcements',
                                       maxLines: 3,
                                       style: GoogleFonts.roboto(
-                                          color: Colors.black,
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.w400),
+                                          color: Colors.black, fontSize: 17.0, fontWeight: FontWeight.w400),
                                       softWrap: true,
                                       overflow: TextOverflow.fade,
                                     ))
@@ -220,8 +220,7 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 16.0),
-                                    child: CircleAvatar(
-                                        backgroundImage: AssetImage('assets/images/avatar.png')),
+                                    child: CircleAvatar(backgroundImage: AssetImage('assets/images/avatar.png')),
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -230,16 +229,12 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
                                       Text(
                                         'TheOffWhiteDealer',
                                         style: GoogleFonts.roboto(
-                                            color: Colors.black,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w700),
+                                            color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w700),
                                       ),
                                       Text(
                                         '32.4K Likes  3 min ago',
                                         style: GoogleFonts.roboto(
-                                            color: Colors.black,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400),
+                                            color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w400),
                                       ),
                                     ],
                                   )
@@ -260,12 +255,8 @@ class _CardDetailsState extends State<CardDetails> with TickerProviderStateMixin
     );
   }
 
-  Widget _buildFlightWidget(
-      BuildContext flightContext,
-      Animation<double> heroAnimation,
-      HeroFlightDirection flightDirection,
-      BuildContext fromHeroContext,
-      BuildContext toHeroContext) {
+  Widget _buildFlightWidget(BuildContext flightContext, Animation<double> heroAnimation,
+      HeroFlightDirection flightDirection, BuildContext fromHeroContext, BuildContext toHeroContext) {
     return AnimatedBuilder(
       animation: heroAnimation,
       builder: (context, child) {

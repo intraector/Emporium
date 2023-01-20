@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class CustomSimulation extends Simulation {
-  CustomSimulation({this.initPosition, this.velocity});
+  CustomSimulation({
+    required this.initPosition,
+    required this.velocity,
+  });
   final double initPosition;
   final double velocity;
   @override

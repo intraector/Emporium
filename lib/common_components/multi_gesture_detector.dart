@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 class MultiGestureDetector extends StatelessWidget {
   MultiGestureDetector({
-    @required this.child,
+    required this.child,
     this.onMove,
     this.onUp,
     this.onDown,
   });
   final Widget child;
-  final Function(PointerMoveEvent) onMove;
-  final Function(PointerUpEvent) onUp;
-  final Function(PointerDownEvent) onDown;
+  final Function(PointerMoveEvent)? onMove;
+  final Function(PointerUpEvent)? onUp;
+  final Function(PointerDownEvent)? onDown;
   @override
   Widget build(BuildContext context) {
     return RawGestureDetector(

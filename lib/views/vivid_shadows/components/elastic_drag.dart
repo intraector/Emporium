@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class ElasticDrag extends StatelessWidget {
   ElasticDrag({
-    @required this.currentPage,
-    @required this.itemIndex,
-    @required this.offset,
-    @required this.child,
+    required this.currentPage,
+    required this.itemIndex,
+    required this.offset,
+    required this.child,
     this.isOn = true,
-    @required this.margin,
-    @required this.elasticMargin,
+    required this.margin,
+    required this.elasticMargin,
     this.axis = Axis.vertical,
   });
 

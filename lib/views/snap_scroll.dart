@@ -12,13 +12,13 @@ import 'package:get_it/get_it.dart';
 
 class SnapScroll extends StatefulWidget {
   SnapScroll({
-    @required this.cell,
-    this.isShadowsOn,
-    this.isRotationOn,
-    this.isElasticOn,
+    required this.cell,
+    this.isShadowsOn = false,
+    this.isRotationOn = false,
+    this.isElasticOn = false,
     this.initialPage = 0,
     this.onPageChanged,
-    this.index,
+    required this.index,
     this.maxRotation = 15.0,
   }) : pageController = PageController(initialPage: initialPage, viewportFraction: cell.widthRatio);
   final bool isShadowsOn;
@@ -27,7 +27,7 @@ class SnapScroll extends StatefulWidget {
   final Cell cell;
 
   final int initialPage;
-  final Function(int) onPageChanged;
+  final Function(int)? onPageChanged;
   final int index;
   final PageController pageController;
   final double maxRotation;
@@ -43,11 +43,11 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
   double _prevScrollX = 0;
   bool _isScrolling = false;
 
-  AnimationController _tweenController;
-  Tween<double> _tween;
-  Animation<double> _tweenAnim;
-  double currentPageValue;
-  int focusedPage;
+  AnimationController? _tweenController;
+  Tween<double>? _tween;
+  Animation<double>? _tweenAnim;
+  late double currentPageValue;
+  late int focusedPage;
   final paths = {
     '0': 'assets/images/vertical.jpg',
     '3': 'assets/images/smoke.jpg',
@@ -78,7 +78,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
             uid: widget.cell.uids[page],
             axis: scrollDirection,
             shadowsIsOn: widget.isShadowsOn,
-            path: paths[count],
+            path: paths[count]!,
             cardWidth: widget.cell.width - (widget.cell.width * widget.cell.paddingRatioH),
             cardHeight: widget.cell.height - (widget.cell.height * widget.cell.paddingRatioV),
           );
@@ -95,11 +95,8 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
               transform: getTransfromation(effect, currentPageValue - page),
               child: Rotation3d(
                 rotationIsOn: widget.isRotationOn,
-                rotationX:
-                    scrollDirection == Axis.vertical ? _normalizedOffset * widget.maxRotation : 0,
-                rotationY: scrollDirection == Axis.horizontal
-                    ? -_normalizedOffset * widget.maxRotation
-                    : 0,
+                rotationX: scrollDirection == Axis.vertical ? _normalizedOffset * widget.maxRotation : 0,
+                rotationY: scrollDirection == Axis.horizontal ? -_normalizedOffset * widget.maxRotation : 0,
                 child: widget.isShadowsOn
                     ? TappableEdgesWithShadows(
                         child: child,
@@ -121,7 +118,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
                               context,
                               WhitePageRoute(
                                   enterPage: CardDetails(
-                                path: paths[count],
+                                path: paths[count]!,
                                 uid: widget.cell.uids[page],
                                 screenSize: MediaQuery.of(context).size,
                               )));
@@ -149,7 +146,7 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
 
   bool _handleScrollNotifications(Notification notification) {
     if (notification is ScrollUpdateNotification) {
-      currentPageValue = widget.pageController.page;
+      currentPageValue = widget.pageController.page!;
       if (_isScrolling) {
         double dx = notification.metrics.pixels - _prevScrollX;
         double scrollFactor = .01;
@@ -160,11 +157,9 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
     } else if (notification is ScrollStartNotification) {
       _isScrolling = true;
       _prevScrollX = notification.metrics.pixels;
-      if (_tween != null) {
-        _tweenController.stop();
-      }
+      _tweenController?.stop();
     } else if (notification is ScrollEndNotification) {
-      focusedPage = widget.pageController.page.round();
+      focusedPage = widget.pageController.page!.round();
     }
     return true;
   }
@@ -185,19 +180,17 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
   void _startOffsetTweenToZero() {
     int tweenTime = 1000;
     if (_tweenController == null) {
-      _tweenController =
-          AnimationController(vsync: this, duration: Duration(milliseconds: tweenTime));
+      _tweenController = AnimationController(vsync: this, duration: Duration(milliseconds: tweenTime));
       _tween = Tween<double>(begin: -1, end: 0);
-      _tweenAnim =
-          _tween.animate(CurvedAnimation(parent: _tweenController, curve: Curves.elasticOut))
-            ..addListener(() {
-              _setOffset(_tweenAnim.value);
-            });
+      _tweenAnim = _tween?.animate(CurvedAnimation(parent: _tweenController!, curve: Curves.elasticOut))
+        ?..addListener(() {
+          _setOffset(_tweenAnim!.value);
+        });
     }
-    _tween.begin = _normalizedOffset;
-    _tweenController.reset();
-    _tween.end = 0;
-    _tweenController.forward();
+    _tween!.begin = _normalizedOffset;
+    _tweenController?.reset();
+    _tween!.end = 0;
+    _tweenController!.forward();
   }
 
   @override
@@ -207,8 +200,8 @@ class _SnapScrollState extends State<SnapScroll> with SingleTickerProviderStateM
   }
 }
 
-Matrix4 getTransfromation(Effect effect, double value) {
-  Matrix4 output;
+Matrix4? getTransfromation(Effect effect, double value) {
+  Matrix4? output;
   switch (effect) {
     case Effect.none:
       return output = null;
