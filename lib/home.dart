@@ -1,6 +1,6 @@
-import 'package:Emporium/_constants/settings.dart';
-import 'package:Emporium/common_components/bottom_tab_bar_material.dart';
-import 'package:Emporium/views/snap_scroll_parent_listview.dart';
+import 'package:emporium/_constants/settings.dart';
+import 'package:emporium/common_components/bottom_tab_bar_material.dart';
+import 'package:emporium/views/snap_scroll_parent_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

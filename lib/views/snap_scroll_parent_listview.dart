@@ -1,6 +1,6 @@
-import 'package:Emporium/_constants/settings.dart';
-import 'package:Emporium/views/snap_scroll.dart';
-import 'package:Emporium/views/vivid_shadows/components/custom_page_view/custom_scroll_physics.dart';
+import 'package:emporium/_constants/settings.dart';
+import 'package:emporium/views/snap_scroll.dart';
+import 'package:emporium/views/vivid_shadows/components/custom_page_view/custom_scroll_physics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

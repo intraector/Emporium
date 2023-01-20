@@ -1,5 +1,5 @@
-import 'package:Emporium/_constants/settings.dart';
-import 'package:Emporium/common_components/bottom_tab_bar_material.dart';
+import 'package:emporium/_constants/settings.dart';
+import 'package:emporium/common_components/bottom_tab_bar_material.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

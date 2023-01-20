@@ -1,5 +1,5 @@
-import 'package:Emporium/common_components/multi_gesture_detector.dart';
-import 'package:Emporium/views/vivid_shadows/components/rotation_3d.dart';
+import 'package:emporium/common_components/multi_gesture_detector.dart';
+import 'package:emporium/views/vivid_shadows/components/rotation_3d.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class TappableEdges extends StatefulWidget {

@@ -7,7 +7,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-// import 'package:Emporium/views/vivid_shadows/components/custom_page_view/custom_scrollable.dart';
+// import 'package:emporium/views/vivid_shadows/components/custom_page_view/custom_scrollable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
@@ -221,8 +221,7 @@ class PageController extends ScrollController {
   }
 
   @override
-  ScrollPosition createScrollPosition(
-      ScrollPhysics physics, ScrollContext context, ScrollPosition oldPosition) {
+  ScrollPosition createScrollPosition(ScrollPhysics physics, ScrollContext context, ScrollPosition oldPosition) {
     return _PagePosition(
       physics: physics,
       context: context,
@@ -338,8 +337,8 @@ class _PagePosition extends ScrollPositionWithSingleContext implements PageMetri
   double get _initialPageOffset => math.max(0, viewportDimension * (viewportFraction - 1) / 2);
 
   double getPageFromPixels(double pixels, double viewportDimension) {
-    final double actual = math.max(0.0, pixels - _initialPageOffset) /
-        math.max(1.0, viewportDimension * viewportFraction);
+    final double actual =
+        math.max(0.0, pixels - _initialPageOffset) / math.max(1.0, viewportDimension * viewportFraction);
     final double round = actual.roundToDouble();
     if ((actual - round).abs() < precisionErrorTolerance) {
       return round;
@@ -359,8 +358,7 @@ class _PagePosition extends ScrollPositionWithSingleContext implements PageMetri
     );
     return pixels == null
         ? null
-        : getPageFromPixels(
-            pixels.clamp(minScrollExtent, maxScrollExtent) as double, viewportDimension);
+        : getPageFromPixels(pixels.clamp(minScrollExtent, maxScrollExtent) as double, viewportDimension);
   }
 
   @override
@@ -372,8 +370,7 @@ class _PagePosition extends ScrollPositionWithSingleContext implements PageMetri
   @override
   void restoreScrollOffset() {
     if (pixels == null) {
-      final double value =
-          PageStorage.of(context.storageContext)?.readState(context.storageContext) as double;
+      final double value = PageStorage.of(context.storageContext)?.readState(context.storageContext) as double;
       if (value != null) _pageToUseOnStartup = value;
     }
   }
@@ -508,8 +505,7 @@ class PageScrollPhysics extends ScrollPhysics {
     final Tolerance tolerance = this.tolerance;
     final double target = _getTargetPixels(position, tolerance, velocity);
     if (target != position.pixels)
-      return ScrollSpringSimulation(spring, position.pixels, target, velocity,
-          tolerance: tolerance);
+      return ScrollSpringSimulation(spring, position.pixels, target, velocity, tolerance: tolerance);
     return null;
   }
 
@@ -828,9 +824,7 @@ class _CustomPageViewState extends State<CustomPageView> {
 
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
-        if (notification.depth == 0 &&
-            widget.onPageChanged != null &&
-            notification is ScrollUpdateNotification) {
+        if (notification.depth == 0 && widget.onPageChanged != null && notification is ScrollUpdateNotification) {
           final PageMetrics metrics = notification.metrics as PageMetrics;
           final int currentPage = metrics.page.round();
           if (currentPage != _lastReportedPage) {
@@ -873,11 +867,9 @@ class _CustomPageViewState extends State<CustomPageView> {
     super.debugFillProperties(description);
     description.add(EnumProperty<Axis>('scrollDirection', widget.scrollDirection));
     description.add(FlagProperty('reverse', value: widget.reverse, ifTrue: 'reversed'));
-    description
-        .add(DiagnosticsProperty<PageController>('controller', widget.controller, showName: false));
+    description.add(DiagnosticsProperty<PageController>('controller', widget.controller, showName: false));
     description.add(DiagnosticsProperty<ScrollPhysics>('physics', widget.physics, showName: false));
-    description.add(
-        FlagProperty('pageSnapping', value: widget.pageSnapping, ifFalse: 'snapping disabled'));
+    description.add(FlagProperty('pageSnapping', value: widget.pageSnapping, ifFalse: 'snapping disabled'));
     description.add(FlagProperty('allowImplicitScrolling',
         value: widget.allowImplicitScrolling, ifTrue: 'allow implicit scrolling'));
   }

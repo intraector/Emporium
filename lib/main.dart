@@ -1,5 +1,5 @@
-import 'package:Emporium/_constants/settings.dart';
-import 'package:Emporium/home.dart';
+import 'package:emporium/_constants/settings.dart';
+import 'package:emporium/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

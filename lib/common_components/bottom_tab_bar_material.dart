@@ -1,5 +1,5 @@
-import 'package:Emporium/home.dart';
-import 'package:Emporium/views/view_settings.dart';
+import 'package:emporium/home.dart';
+import 'package:emporium/views/view_settings.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabBarMaterial extends StatelessWidget {
